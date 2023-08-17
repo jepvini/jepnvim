@@ -220,6 +220,6 @@ so to indent whole file and don't lose the cursor position: `gg=G''`
 numerical registers are used for yank and delete
 `0` is the last register, then `1` and so on
 
-`+` is the system buffer
-yank line to system buffer: `"+yy`
-paste from system buffer: `"+p` -> although this works `Control-Shift-v` is more convenient 
+`+` is the system register
+yank line to system register: `"+yy`
+paste from system register: `"+p` -> although this works `Control-Shift-v` is more convenient 

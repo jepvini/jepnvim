@@ -65,7 +65,7 @@ vim.opt.mouse = 'n'
 vim.g.mapleader = ' '
 
 -- jk as esc
-vim.keymap.set({'i', 'v'}, 'jk', '<esc>')
+vim.keymap.set({'i'}, 'jk', '<esc>')
 
 -- Save file
 vim.keymap.set('n', '<leader>w', '<cmd>write<cr>')
@@ -92,6 +92,9 @@ vim.keymap.set('n', '<leader>g', "gg=G''")
 -- Tabs
 vim.keymap.set('n', '<leader>tl', '<cmd>+tabnext<cr>') -- next
 vim.keymap.set('n', '<leader>th', '<cmd>-tabnext<cr>') -- prev
+
+-- Show registers
+vim.keymap.set('n', '<leader>R', '<cmd>registers<cr>')
 
 -- Disable scroll in insert mode
 vim.keymap.set('i', '<Up>', '<nop>')
@@ -146,6 +149,7 @@ lazy.setup({
   { 'folke/tokyonight.nvim', priority = 10000 },
   { 'ellisonleao/gruvbox.nvim', priority = 1000 },
   { 'rebelot/kanagawa.nvim', priority = 1000 },
+
   -- Various
   { 'LnL7/vim-nix' },
   { 'akinsho/toggleterm.nvim' },
@@ -180,9 +184,8 @@ lazy.setup({
   { 'hrsh7th/cmp-vsnip' }, --snips
   { 'hrsh7th/nvim-cmp' }, -- main
   { 'hrsh7th/vim-vsnip' }, --snip source
-  { 'onsails/lspkind.nvim' }, -- vscode like pictogram
   { 'uga-rosa/cmp-dictionary' }, -- dictionary auto
-
+  { 'FelipeLema/cmp-async-path' },
 })
 
 -- Plugin config
@@ -446,7 +449,7 @@ cmp.setup({
         buffer = "[Buffer]",
         vsnip = "[Vsnip]",
         nvim_lsp = "[LSP]",
-        path = "[Path]",
+        async_path = "[Path]",
         dictionary = "[Dict]",
       })[entry.source.name]
       return vim_item
@@ -454,9 +457,9 @@ cmp.setup({
   },
   sources = {
     { name = 'buffer' },
-    { name = "vsnip" },
     { name = "nvim_lsp" },
-    { name = "path" },
+    { name = "vsnip" },
+    { name = 'async_path' },
     {
       name = "dictionary",
       keyword_length = 5,
@@ -464,8 +467,13 @@ cmp.setup({
   },
 })
 
+-- Lsp
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require'lspconfig'.clangd.setup {
+  capabilities = capabilities,
+}
+
 -- Dictionary setup
---
 -- to change dict just run 
 -- :set spelllang=en
 local dict = require("cmp_dictionary")
