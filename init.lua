@@ -152,8 +152,10 @@ lazy.setup({
 
   -- Various
   { 'LnL7/vim-nix' },
+  { 'RRethy/vim-illuminate' },
   { 'akinsho/toggleterm.nvim' },
   { 'editorconfig/editorconfig-vim' },
+  { 'ellisonleao/glow.nvim', config = true, cmd = 'Glow' },
   { 'kyazdani42/nvim-tree.lua' },
   { 'lewis6991/gitsigns.nvim' },
   { 'lukas-reineke/indent-blankline.nvim' },
@@ -168,7 +170,6 @@ lazy.setup({
   { 'tpope/vim-surround' },
   { 'wellle/targets.vim' },
   { 'zhimsel/vim-stay' },
-  {"ellisonleao/glow.nvim", config = true, cmd = "Glow"},
 
   -- StartUp
   { "startup-nvim/startup.nvim" },
@@ -180,12 +181,11 @@ lazy.setup({
   -- Autocomplete
   { 'hrsh7th/cmp-buffer' }, -- buffer
   { 'hrsh7th/cmp-nvim-lsp' }, -- Lsp
-  { 'hrsh7th/cmp-path' }, -- path auto
   { 'hrsh7th/cmp-vsnip' }, --snips
   { 'hrsh7th/nvim-cmp' }, -- main
   { 'hrsh7th/vim-vsnip' }, --snip source
   { 'uga-rosa/cmp-dictionary' }, -- dictionary auto
-  { 'FelipeLema/cmp-async-path' },
+  { 'FelipeLema/cmp-async-path' }, -- path outo asynchronous
 })
 
 -- Plugin config
@@ -358,6 +358,9 @@ require('glow').setup({
   style = "dark",
   width = 120,
 })
+
+-- illuminate
+require('illuminate').configure({})
 
 -- Plugins end
 
