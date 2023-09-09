@@ -171,6 +171,7 @@ lazy.setup({
   { 'wellle/targets.vim' },
   { 'zhimsel/vim-stay' },
 
+
   -- StartUp
   { "startup-nvim/startup.nvim" },
 
