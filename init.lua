@@ -159,6 +159,7 @@ lazy.setup({
   { 'kyazdani42/nvim-tree.lua' },
   { 'lewis6991/gitsigns.nvim' },
   { 'lukas-reineke/indent-blankline.nvim' },
+  { 'nathom/filetype.nvim' },
   { 'norcalli/nvim-colorizer.lua' },
   { 'numToStr/Comment.nvim' },
   { 'nvim-lualine/lualine.nvim' },
@@ -360,8 +361,22 @@ require('glow').setup({
   width = 120,
 })
 
--- illuminate
+-- Illuminate
 require('illuminate').configure({})
+
+-- Filetype
+require("filetype").setup({
+  overrides = {
+    extensions = {
+      -- Set the filetype of *.pn files to potion
+      sh = "sh",
+    },
+    shebang = {
+      -- Set the filetype of files with a dash shebang to sh
+      dash = "sh",
+    },
+  },
+})
 
 -- Plugins end
 
