@@ -183,9 +183,11 @@ lazy.setup({
   -- Autocomplete
   { 'hrsh7th/cmp-buffer' }, -- buffer
   { 'hrsh7th/cmp-nvim-lsp' }, -- Lsp
-  { 'hrsh7th/cmp-vsnip' }, --snips
+  { 'hrsh7th/cmp-vsnip' }, -- snips
+  { 'hrss7ts/vim-vsnip-integ' }, -- snips again
+  { 'rafamadriz/friendly-snippets' }, -- snipets list
   { 'hrsh7th/nvim-cmp' }, -- main
-  { 'hrsh7th/vim-vsnip' }, --snip source
+  { 'hrsh7th/vim-vsnip' }, -- snip source
   { 'uga-rosa/cmp-dictionary' }, -- dictionary auto
   { 'FelipeLema/cmp-async-path' }, -- path outo asynchronous
 })
