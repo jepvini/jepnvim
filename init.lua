@@ -8,6 +8,9 @@
 -- nix -> for lazy-lsp
 -- $ curl -L https://nixos.org/nix/install | sh
 --
+-- shellcheck -> for bashls
+-- # apt install shellcheck
+--
 -- english dictionary 
 -- install aspell
 -- # apt install aspell aspell-en
@@ -54,6 +57,10 @@ vim.opt.expandtab = true
 
 -- No mouse in insert mode
 vim.opt.mouse = 'n'
+
+-- For modicator
+vim.o.termguicolors = true
+vim.o.cursorline = true
 
 ----------------------------------------------------
 
@@ -159,6 +166,7 @@ lazy.setup({
   { 'kyazdani42/nvim-tree.lua' },
   { 'lewis6991/gitsigns.nvim' },
   { 'lukas-reineke/indent-blankline.nvim' },
+  { 'mawkler/modicator.nvim' },
   { 'nathom/filetype.nvim' },
   { 'norcalli/nvim-colorizer.lua' },
   { 'numToStr/Comment.nvim' },
@@ -184,7 +192,7 @@ lazy.setup({
   { 'hrsh7th/cmp-buffer' }, -- buffer
   { 'hrsh7th/cmp-nvim-lsp' }, -- Lsp
   { 'hrsh7th/cmp-vsnip' }, -- snips
-  { 'hrss7ts/vim-vsnip-integ' }, -- snips again
+  { 'hrsh7th/vim-vsnip-integ' }, -- snips again
   { 'rafamadriz/friendly-snippets' }, -- snipets list
   { 'hrsh7th/nvim-cmp' }, -- main
   { 'hrsh7th/vim-vsnip' }, -- snip source
@@ -376,6 +384,34 @@ require("filetype").setup({
     shebang = {
       -- Set the filetype of files with a dash shebang to sh
       dash = "sh",
+    },
+  },
+})
+
+
+-- CursorLine
+-- require('nvim-cursorline').setup {
+--   cursorline = {
+--     enable = true,
+--     timeout = 1000,
+--     number = false,
+--   },
+--   cursorword = {
+--     enable = true,
+--     min_length = 3,
+--     hl = { underline = true },
+--   }
+-- }
+
+-- Modicator
+require('modicator').setup({
+  -- Show warning if any required option is missing
+  show_warnings = true,
+  highlights = {
+    -- Default options for bold/italic
+    defaults = {
+      bold = false,
+      italic = false
     },
   },
 })
