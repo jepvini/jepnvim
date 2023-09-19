@@ -256,34 +256,6 @@ require('nvim-treesitter.configs').setup({
   indent = {
     enable = true
   },
-  ensure_installed = {
-    'bash',
-    'c',
-    'c_sharp',
-    'comment',
-    'cpp',
-    'css',
-    'dockerfile',
-    'fish',
-    'git_config',
-    'git_rebase',
-    'gitattributes',
-    'gitcommit',
-    'gitignore',
-    'html',
-    'ini',
-    'javascript',
-    'json',
-    'latex',
-    'lua',
-    'markdown',
-    'markdown_inline',
-    'matlab',
-    'nix',
-    'python',
-    'rust',
-    'yaml',
-  },
 })
 
 -- Targets
@@ -380,6 +352,7 @@ require("filetype").setup({
     extensions = {
       -- Set the filetype of *.pn files to potion
       sh = "sh",
+      c = "c",
     },
     shebang = {
       -- Set the filetype of files with a dash shebang to sh
