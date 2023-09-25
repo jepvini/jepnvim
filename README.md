@@ -56,7 +56,7 @@ all the Keybindings are in normal mode, unless specified
 - back: `H` 
 - toggle hidden files: `gh`
 
-**telescope** -> fuzzy searcher
+ *telescope** -> fuzzy searcher
 - search file in current buffer: `<leader><space>` *double tap space*
 - search in reccent files: `<leader>r`
 - search files in current dir: `<leader>ff`

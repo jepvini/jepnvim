@@ -38,6 +38,7 @@ vim.opt.smartcase = true
 
 -- Remove previous search highlihts
 vim.opt.hlsearch = false
+vim.opt.incsearch = true
 
 -- Long lines wrapped
 vim.opt.wrap = true
@@ -46,13 +47,23 @@ vim.opt.wrap = true
 vim.opt.breakindent = true
 
 -- Tab size
-vim.opt.tabstop = 2
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
 
 -- Indent size
-vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 
 -- Tab are spaces
 vim.opt.expandtab = true
+
+-- always have min 8 lines from cursor and end of screen
+vim.opt.scrolloff = 8
+
+-- use undotree for undo
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
 
 -- No mouse in insert mode
 vim.opt.mouse = "n"
@@ -61,7 +72,10 @@ vim.opt.mouse = "n"
 vim.o.termguicolors = true
 vim.o.cursorline = true
 
--- disable netrw at the very start of your init.lua
+-- Fat cursor
+vim.opt.guicursor = ""
+
+-- Disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -90,14 +104,25 @@ vim.keymap.set({ "n", "x", "v" }, "cv", '"+p')
 --- Delete does not change internal register
 vim.keymap.set({ "n", "x", "v" }, "x", '"_x')
 
+-- Move visual selecyed lines
+vim.keymap.set("v", "J", ":m '>+1<CR> gv=gv")
+vim.keymap.set("v", "K", ":m '>-2<CR> gv=gv")
+
+-- J keeps cursor in position
+vim.keymap.set("n", "J", "mzJ`z")
+
+-- Search terms stau in the middle
+vim.keymap.set("n", "n", "nzzzd")
+vim.keymap.set("n", "N", "Nzzzd")
+
+-- Replace without touching the buffer
+vim.keymap.set("x", "<leader>p", '"_dP')
+
 -- Sort selected text
 vim.keymap.set("v", "<leader>S", ":sort<cr>")
 
 -- Select whole buffer
 vim.keymap.set("n", "<leader>a", ":keepjumps normal! ggVG<cr>")
-
--- Indent whole file
-vim.keymap.set("n", "<leader>g", "gg=G''")
 
 -- Tabs
 vim.keymap.set("n", "<leader>tl", "<cmd>+tabnext<cr>") -- next
@@ -159,45 +184,60 @@ lazy.setup({
 	{ "rebelot/kanagawa.nvim", priority = 1000 },
 
 	-- Various
-	{ "LnL7/vim-nix" },
-	{ "RRethy/vim-illuminate" },
-	{ "akinsho/toggleterm.nvim" },
+	{ "LnL7/vim-nix" }, -- better support for nix
+	{ "RRethy/vim-illuminate" }, -- illuminate same word as cursor
+	{ "ThePrimeagen/harpoon" }, -- fast jump to file
+	{ "akinsho/toggleterm.nvim" }, -- terminal
 	{ "editorconfig/editorconfig-vim" },
-	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
-	{ "kyazdani42/nvim-tree.lua" },
-	{ "lewis6991/gitsigns.nvim" },
-	{ "lukas-reineke/indent-blankline.nvim" },
-	{ "mawkler/modicator.nvim" },
-	{ "norcalli/nvim-colorizer.lua" },
-	{ "numToStr/Comment.nvim" },
-	{ "nvim-lualine/lualine.nvim" },
-	{ "nvim-telescope/telescope.nvim", tag = "0.1.2", dependencies = { "nvim-lua/plenary.nvim" } },
-	{ "nvim-tree/nvim-web-devicons" },
-	{ "nvim-treesitter/nvim-treesitter" },
-	{ "pocco81/auto-save.nvim" },
-	{ "tpope/vim-repeat" },
-	{ "tpope/vim-surround" },
-	{ "wellle/targets.vim" },
-	{ "zhimsel/vim-stay" },
-	{ "stevearc/conform.nvim", opts = {} },
+	{ "kyazdani42/nvim-tree.lua" }, -- file manager
+	{ "lewis6991/gitsigns.nvim" }, -- git info
+	{ "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
+	{ "mbbill/undotree" }, -- better undo
+	{ "norcalli/nvim-colorizer.lua" }, -- color over #999999
+	{ "numToStr/Comment.nvim" }, -- comment with leader cc
+	{ "nvim-lualine/lualine.nvim" }, -- status line theme
+	{ "nvim-telescope/telescope.nvim", tag = "0.1.2", dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
+	{ "nvim-tree/nvim-web-devicons" }, -- icons
+	{ "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
+	{ "stevearc/conform.nvim", opts = {} }, -- formatter
+	{ "tpope/vim-repeat" }, -- better .
+	{ "tpope/vim-surround" }, -- adds the command surround
+	{ "wellle/targets.vim" }, -- surround
+	{ "zhimsel/vim-stay" }, -- cursor stays in place on file closing and reopening
 
 	-- StartUp
-	{ "startup-nvim/startup.nvim" },
+	{ "startup-nvim/startup.nvim" }, -- startup page
 
 	-- Lsp
-	{ "dundalek/lazy-lsp.nvim" },
-	{ "neovim/nvim-lspconfig" },
+	-- { "dundalek/lazy-lsp.nvim" },
 
-	-- Autocomplete
-	{ "hrsh7th/cmp-buffer" }, -- buffer
-	{ "hrsh7th/cmp-nvim-lsp" }, -- Lsp
-	{ "hrsh7th/cmp-vsnip" }, -- snips
-	{ "hrsh7th/vim-vsnip-integ" }, -- snips again
-	{ "rafamadriz/friendly-snippets" }, -- snippets list
-	{ "hrsh7th/nvim-cmp" }, -- main
-	{ "hrsh7th/vim-vsnip" }, -- snip source
-	{ "uga-rosa/cmp-dictionary" }, -- dictionary auto
-	{ "FelipeLema/cmp-async-path" }, -- path outo asynchronous
+	{
+		{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
+
+		-- LSP Support
+		{
+			"neovim/nvim-lspconfig",
+			dependencies = {
+				{ "hrsh7th/cmp-nvim-lsp" },
+			},
+		},
+
+		-- Autocompletion
+		{
+			"hrsh7th/nvim-cmp",
+			dependencies = {
+				{
+					"L3MON4D3/LuaSnip",
+					dependencies = { "rafamadriz/friendly-snippets" },
+				},
+				{ "hrsh7th/cmp-buffer" }, -- buffer
+				{ "hrsh7th/cmp-nvim-lsp" }, -- Lsp
+				{ "saadparwaiz1/cmp_luasnip" }, -- snippets command
+				{ "uga-rosa/cmp-dictionary" }, -- dictionary auto
+				{ "FelipeLema/cmp-async-path" }, -- path outo asynchronous
+			},
+		},
+	},
 })
 
 -- Plugin config
@@ -219,6 +259,9 @@ require("kanagawa").setup({
 })
 
 vim.cmd.colorscheme("kanagawa")
+
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- Lualine
 vim.opt.showmode = false
@@ -332,16 +375,48 @@ vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>")
 
 -- Telescope
 require("telescope").setup({
-	defaults = {
-		mappings = {
-			i = {
-				["<cr>"] = "select_tab",
+	pickers = {
+		oldfiles = {
+			mappings = {
+				i = {
+					["<cr>"] = "select_tab",
+				},
+				n = {
+					["<cr>"] = "select_tab",
+				},
 			},
-			n = {
-				["<cr>"] = "select_tab",
+		},
+		find_files = {
+			mappings = {
+				i = {
+					["<cr>"] = "select_tab",
+				},
+				n = {
+					["<cr>"] = "select_tab",
+				},
+			},
+		},
+		live_grep = {
+			mappings = {
+				i = {
+					["<cr>"] = "select_tab",
+				},
+				n = {
+					["<cr>"] = "select_tab",
+				},
 			},
 		},
 	},
+	-- defaults = {
+	-- 	mappings = {
+	-- 		i = {
+	-- 			["<cr>"] = "select_tab",
+	-- 		},
+	-- 		n = {
+	-- 			["<cr>"] = "select_tab",
+	-- 		},
+	-- 	},
+	-- },
 })
 
 vim.keymap.set("n", "<leader>r", "<cmd>Telescope oldfiles<cr>")
@@ -370,27 +445,8 @@ require("gitsigns").setup({
 -- Colorizer
 require("colorizer").setup()
 
--- Glow
-require("glow").setup({
-	style = "dark",
-	width = 120,
-})
-
 -- Illuminate
 require("illuminate").configure({})
-
--- Modicator
-require("modicator").setup({
-	-- Show warning if any required option is missing
-	show_warnings = true,
-	highlights = {
-		-- Default options for bold/italic
-		defaults = {
-			bold = false,
-			italic = false,
-		},
-	},
-})
 
 -- Formatter
 require("conform").setup({
@@ -419,6 +475,29 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+-- Harpoon
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+
+vim.keymap.set("n", "<leader>d", mark.add_file)
+vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+
+vim.keymap.set("n", "<C-h>", function()
+	ui.nav_file(1)
+end)
+vim.keymap.set("n", "<C-j>", function()
+	ui.nav_file(2)
+end)
+vim.keymap.set("n", "<C-k>", function()
+	ui.nav_file(3)
+end)
+vim.keymap.set("n", "<C-l>", function()
+	ui.nav_file(4)
+end)
+
+-- Undotree
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
 -- Plugins end
 
 ----------------------------------------------------
@@ -435,118 +514,56 @@ require("startup").setup({ theme = "startify" })
 
 ----------------------------------------------------
 
-require("lazy-lsp").setup({
-	excluded_servers = {
-		"sqls",
-	},
-	preferred_servers = {
-		haskell = { "hls" },
-		rust = { "rust_analyzer" },
-	},
-	configs = {
-		lua_ls = {
-			settings = {
-				Lua = {
-					diagnostics = {
-						-- Get the language server to recognize the `vim` global
-						globals = { "vim" },
-					},
-				},
-			},
-		},
-	},
-})
-
-----------------------------------------------------
-
--- Autocompletion
-
-----------------------------------------------------
-
--- Set up nvim-cmp.
-
-local kind_icons = {
-	Text = "",
-	Method = "",
-	Constructor = "",
-}
-
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+-- lsp zero
+local lsp_zero = require("lsp-zero")
 
 local cmp = require("cmp")
+local cmp_action = require("lsp-zero").cmp_action()
+local cmp_format = require("lsp-zero").cmp_format()
+
+require("luasnip.loaders.from_vscode").lazy_load()
+
 cmp.setup({
-	snippet = {
-		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
-		end,
-	},
-	mapping = {
-		["<C-p>"] = cmp.mapping.select_prev_item(),
-		["<C-n>"] = cmp.mapping.select_next_item(),
-		["<C-d>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<C-e>"] = cmp.mapping.close(),
-		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
-		}),
-		["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
-	},
-	formatting = {
-		format = function(entry, vim_item)
-			-- Kind icons
-			vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatenates the icons with the name of the item kind
-			-- Source
-			vim_item.menu = ({
-				buffer = "[Buffer]",
-				vsnip = "[Vsnip]",
-				nvim_lsp = "[LSP]",
-				async_path = "[Path]",
-				dictionary = "[Dict]",
-			})[entry.source.name]
-			return vim_item
-		end,
-	},
+	formatting = cmp_format,
+	mapping = cmp.mapping.preset.insert({
+		["<CR>"] = cmp.mapping.confirm({ select = false }),
+		["<Tab>"] = cmp_action.luasnip_supertab(),
+		["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
+	}),
 	sources = {
-		{ name = "buffer" },
+		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
-		{ name = "vsnip" },
 		{ name = "async_path" },
+		{ name = "buffer" },
 		{
 			name = "dictionary",
 			keyword_length = 5,
 		},
 	},
-})
-
--- Lsp
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-require("lspconfig").clangd.setup({
-	capabilities = capabilities,
-})
-
--- Dictionary setup
--- to change dict just run
--- :set spelllang=en
-local dict = require("cmp_dictionary")
-
-dict.setup({
-	-- The following are default values.
-	exact = 2,
-	first_case_insensitive = false,
-	document = false,
-	document_command = "wn %s -over",
-	async = false,
-	sqlite = false,
-	max_items = -1,
-	capacity = 5,
-	debug = false,
-})
-
-dict.switcher({
-	spelllang = {
-		en = "~/.config/nvim/dicts/en.dict",
+	preselect = "item",
+	completion = {
+		completeopt = "menu,menuone,noinsert",
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
 	},
 })
+
+require("lspconfig").bashls.setup({})
+require("lspconfig").ccls.setup({
+	require("lspconfig").lua_ls.setup({
+		settings = {
+			Lua = {
+				diagnostics = {
+					-- Get the language server to recognize the `vim` global
+					globals = { "vim" },
+				},
+			},
+		},
+	}),
+})
+require("lspconfig").nil_ls.setup({})
+require("lspconfig").pyright.setup({})
+require("lspconfig").rust_analyzer.setup({})
+require("lspconfig").yamlls.setup({})
