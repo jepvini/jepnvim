@@ -40,6 +40,9 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+-- Remove signline
+vim.opt.signcolumn = "no"
+
 -- Long lines wrapped
 vim.opt.wrap = true
 
@@ -47,11 +50,11 @@ vim.opt.wrap = true
 vim.opt.breakindent = true
 
 -- Tab size
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
 
 -- Indent size
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 
 -- Tab are spaces
 vim.opt.expandtab = true
@@ -106,7 +109,7 @@ vim.keymap.set({ "n", "x", "v" }, "x", '"_x')
 
 -- Move visual selecyed lines
 vim.keymap.set("v", "J", ":m '>+1<CR> gv=gv")
-vim.keymap.set("v", "K", ":m '>-2<CR> gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR> gv=gv")
 
 -- J keeps cursor in position
 vim.keymap.set("n", "J", "mzJ`z")
@@ -186,11 +189,9 @@ lazy.setup({
 	-- Various
 	{ "LnL7/vim-nix" }, -- better support for nix
 	{ "RRethy/vim-illuminate" }, -- illuminate same word as cursor
-	{ "ThePrimeagen/harpoon" }, -- fast jump to file
 	{ "akinsho/toggleterm.nvim" }, -- terminal
 	{ "editorconfig/editorconfig-vim" },
 	{ "kyazdani42/nvim-tree.lua" }, -- file manager
-	{ "lewis6991/gitsigns.nvim" }, -- git info
 	{ "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
 	{ "mbbill/undotree" }, -- better undo
 	{ "norcalli/nvim-colorizer.lua" }, -- color over #999999
@@ -208,9 +209,7 @@ lazy.setup({
 	-- StartUp
 	{ "startup-nvim/startup.nvim" }, -- startup page
 
-	-- Lsp
-	-- { "dundalek/lazy-lsp.nvim" },
-
+	-- Lsp zero
 	{
 		{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
 
@@ -262,6 +261,8 @@ vim.cmd.colorscheme("kanagawa")
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#C8C093" })
 
 -- Lualine
 vim.opt.showmode = false
@@ -407,16 +408,6 @@ require("telescope").setup({
 			},
 		},
 	},
-	-- defaults = {
-	-- 	mappings = {
-	-- 		i = {
-	-- 			["<cr>"] = "select_tab",
-	-- 		},
-	-- 		n = {
-	-- 			["<cr>"] = "select_tab",
-	-- 		},
-	-- 	},
-	-- },
 })
 
 vim.keymap.set("n", "<leader>r", "<cmd>Telescope oldfiles<cr>")
@@ -429,17 +420,6 @@ require("toggleterm").setup({
 	open_mapping = "<C-t>",
 	direction = "horizontal",
 	shade_terminals = true,
-})
-
--- Gitsigns
-require("gitsigns").setup({
-	signs = {
-		add = { text = "▎" },
-		change = { text = "▎" },
-		delete = { text = "➤" },
-		topdelete = { text = "➤" },
-		changedelete = { text = "▎" },
-	},
 })
 
 -- Colorizer
@@ -475,28 +455,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
--- Harpoon
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
-
-vim.keymap.set("n", "<leader>d", mark.add_file)
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-
-vim.keymap.set("n", "<C-h>", function()
-	ui.nav_file(1)
-end)
-vim.keymap.set("n", "<C-j>", function()
-	ui.nav_file(2)
-end)
-vim.keymap.set("n", "<C-k>", function()
-	ui.nav_file(3)
-end)
-vim.keymap.set("n", "<C-l>", function()
-	ui.nav_file(4)
-end)
-
 -- Undotree
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+vim.keymap.set("n", "<leader>p", vim.cmd.UndotreeToggle)
 
 -- Plugins end
 
@@ -510,7 +470,7 @@ require("startup").setup({ theme = "startify" })
 
 ----------------------------------------------------
 
--- LSP servers with lazy-lsp
+-- LSP servers with lsp_zero
 
 ----------------------------------------------------
 
