@@ -128,8 +128,10 @@ vim.keymap.set("v", "<leader>S", ":sort<cr>")
 vim.keymap.set("n", "<leader>a", ":keepjumps normal! ggVG<cr>")
 
 -- Tabs
-vim.keymap.set("n", "<leader>tl", "<cmd>+tabnext<cr>") -- next
-vim.keymap.set("n", "<leader>th", "<cmd>-tabnext<cr>") -- prev
+vim.keymap.set("n", "<leader>h", "<cmd>tabn 3<cr>") -- tab 1
+vim.keymap.set("n", "<leader>j", "<cmd>tabn 1<cr>") -- tab 2
+vim.keymap.set("n", "<leader>k", "<cmd>tabn 2<cr>") -- tab 3
+vim.keymap.set("n", "<leader>l", "<cmd>tabn 4<cr>") -- tab 4
 
 -- Show registers
 vim.keymap.set("n", "<leader>R", "<cmd>registers<cr>")
