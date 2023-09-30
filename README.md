@@ -4,12 +4,7 @@
 
 ### Dependencies:
 
-nix -> for **lazy-lsp**
-
-it can be installed running\
-`$ curl -L https://nixos.org/nix/install | sh`
-
-Dictionary can also be added for autocompletion, just place them in the `dicts` folder and add them with the `nvim-cmp` plugin
+Lsp servers and formatters are downloaded manually, it's easier using nixOs, if you want to auto install them look at the [lsp-zero]("https://github.com/VonHeikemen/lsp-zero.nvim") github
 
 ### Usage:
 
@@ -18,6 +13,8 @@ The leader key is `space`
 In order to navigate pls don't be a n**b and use `hjkl`, this is not VScode
 
 `Up` and `Down` keys have been disabled since they are sent by the terminal when the touchpad is accidentally touched while typing -- really annoying
+
+at the moment h and l are disabled because I want to learn to usr e, b and w instead
 
 ### Keybindings
 
@@ -34,16 +31,16 @@ all the Keybindings are in normal mode, unless specified
 - save file: `<leader>w`
 - exit file without closing the window: `<leader>q`
 - esc: `jk` -> insert mode
+- toggle autosave: `<leader>s`
 
-+ auto-indent all file: `<leader>g` 
-+ next tab: `<leader>tl`
-+ prev tab: `<leader>th`
++ format file: `<leader>g` 
+j next tab: `gt`
 
-- comment current line: `<leader>cc`
-- add comment at the end of the line: `<leader>cA`
+- comment current line: `<leader>c`
+- add comment at the end of the line: `<leader>a`
 - commedt visual selected block: `<leader>b`
 
-+ sort alphanumerically visual selected code: `<leader>s`
++ sort alphanumerically visual selected code: `<leader>S`
 
 - yank to system keyboard: `cs`
 - paste from system keyboard: `cv`
@@ -57,13 +54,12 @@ all the Keybindings are in normal mode, unless specified
 - toggle hidden files: `gh`
 
  *telescope** -> fuzzy searcher
-- search file in current buffer: `<leader><space>` *double tap space*
 - search in reccent files: `<leader>r`
 - search files in current dir: `<leader>ff`
 - grep current dir: `<leader>fg` *uses ripgrep, written in rust:)*
 - search in current file: `<leader>fs` *use this instead as classic vim `/`
 
-+ open file in a new tab: `<C-t>`
++ open file in a new tab: `<enter>`
 + open file in split: `<C-x>`
 + open file in vsplit: `<C-v>`
 
@@ -86,6 +82,8 @@ of what:
 + inner word (bounded by non letters): `iw`
 + inner Word (bounded by spaces): `iW`
 + etc. -> more in vim documentation 
+
+current line is selected with `_`, which is not a standard vim alias
 
 what:
 - quotes: `'`
