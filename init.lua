@@ -18,6 +18,9 @@
 -- pipe it to a location
 -- $ aspell -d en dump master | aspell -l en expand > my.dict
 
+-- disables hl to learn to use ebw
+vim.keymap.set("n", "l", "<cmd>write")
+vim.keymap.set("n", "h", "<cmd>write")
 --------------------------------------------------
 
 -- vim.opt settings
@@ -124,8 +127,8 @@ vim.keymap.set("x", "<leader>p", '"_dP')
 -- Sort selected text
 vim.keymap.set("v", "<leader>S", ":sort<cr>")
 
--- Select whole buffer
-vim.keymap.set("n", "<leader>a", ":keepjumps normal! ggVG<cr>")
+-- Select whole buffe
+vim.keymap.set("n", "<leader>A", ":keepjumps normal! ggVG<cr>")
 
 -- Tabs
 vim.keymap.set("n", "<leader>h", "<cmd>tabn 3<cr>") -- tab 1
@@ -184,9 +187,10 @@ lazy.opts = {}
 
 lazy.setup({
 	-- Themes
-	{ "folke/tokyonight.nvim", priority = 10000 },
 	{ "ellisonleao/gruvbox.nvim", priority = 1000 },
+	{ "folke/tokyonight.nvim", priority = 10000 },
 	{ "rebelot/kanagawa.nvim", priority = 1000 },
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
 	-- Various
 	{ "LnL7/vim-nix" }, -- better support for nix
@@ -202,6 +206,7 @@ lazy.setup({
 	{ "nvim-telescope/telescope.nvim", tag = "0.1.2", dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
 	{ "nvim-tree/nvim-web-devicons" }, -- icons
 	{ "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
+	{ "pocco81/auto-save.nvim" }, -- auto save
 	{ "stevearc/conform.nvim", opts = {} }, -- formatter
 	{ "tpope/vim-repeat" }, -- better .
 	{ "tpope/vim-surround" }, -- adds the command surround
@@ -243,6 +248,18 @@ lazy.setup({
 
 -- Plugin config
 
+require("catppuccin").setup({
+	flavour = "macchiato", -- latte, frappe, macchiato, mocha
+	background = { -- :h background
+		light = "latte",
+		dark = "mocha",
+	},
+	transparent_background = true,
+})
+
+-- setup must be called before loading
+vim.cmd.colorscheme("catppuccin")
+
 -- Tokyonight
 -- vim.opt.termguicolors = true
 -- vim.cmd.colorscheme('tokyonight')
@@ -252,14 +269,14 @@ lazy.setup({
 -- vim.cmd([[colorscheme gruvbox]])
 
 -- Kanagawa
-require("kanagawa").setup({
-	background = { -- map the value of 'background' option to a theme
-		dark = "wave", -- try "dragon" !
-		light = "lotus",
-	},
-})
-
-vim.cmd.colorscheme("kanagawa")
+-- require("kanagawa").setup({
+-- 	background = { -- map the value of 'background' option to a theme
+-- 		dark = "wave", -- try "dragon" !
+-- 		light = "lotus",
+-- 	},
+-- })
+--
+-- vim.cmd.colorscheme("kanagawa")
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
@@ -324,24 +341,20 @@ vim.g.targets_aiAI = "aiAI"
 -- Comment
 require("Comment").setup({
 	toggler = {
-		---Line-comment toggle keymap
-		line = "<leader>cc",
-		---Block-comment toggle keymap
+		-- Line-comment toggle keymap
+		line = "<leader>c",
+		-- Block-comment toggle keymap
 		block = "<leader>bc",
 	},
 	opleader = {
-		---Line-comment keymap
+		-- Line-comment keymap
 		line = "<leader>c",
-		---Block-comment keymap
+		-- Block-comment keymap
 		block = "<leader>b",
 	},
 	extra = {
-		---Add comment on the line above
-		above = "<leader>cO",
-		---Add comment on the line below
-		below = "<leader>co",
-		---Add comment at the end of line
-		eol = "<leader>cA",
+		-- Add comment at the end of line
+		eol = "<leader>a",
 	},
 })
 
@@ -432,11 +445,18 @@ require("illuminate").configure({})
 
 -- Formatter
 require("conform").setup({
-	format_on_save = {
-		-- These options will be passed to conform.format()
-		timeout_ms = 500,
-		lsp_fallback = true,
-	},
+	vim.api.nvim_create_user_command("Format", function(args)
+		local range = nil
+		if args.count ~= -1 then
+			local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+			range = {
+				start = { args.line1, 0 },
+				["end"] = { args.line2, end_line:len() },
+			}
+		end
+		require("conform").format({ async = true, lsp_fallback = true, range = range })
+	end, { range = true }),
+
 	formatters_by_ft = {
 		c = { "clang_format" },
 		cpp = { "clang_format" },
@@ -450,15 +470,13 @@ require("conform").setup({
 	},
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
-})
+vim.keymap.set("n", "<leader>g", vim.cmd.Format)
 
 -- Undotree
 vim.keymap.set("n", "<leader>p", vim.cmd.UndotreeToggle)
+
+-- Auto save
+vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
 
 -- Plugins end
 
@@ -506,10 +524,10 @@ cmp.setup({
 	completion = {
 		completeopt = "menu,menuone,noinsert",
 	},
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
-	},
+	-- window = {
+	-- 	completion = cmp.config.window.bordered(),
+	-- 	documentation = cmp.config.window.bordered(),
+	-- },
 })
 
 require("lspconfig").bashls.setup({})
