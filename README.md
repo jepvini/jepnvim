@@ -83,7 +83,7 @@ of what:
 + inner Word (bounded by spaces): `iW`
 + etc. -> more in vim documentation 
 
-current line is selected with `_`, which is not a standard vim alias
+current line is selected with `_`, whic+ current line 
 
 what:
 - quotes: `'`

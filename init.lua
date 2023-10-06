@@ -18,9 +18,6 @@
 -- pipe it to a location
 -- $ aspell -d en dump master | aspell -l en expand > my.dict
 
--- disables hl to learn to use ebw
-vim.keymap.set("n", "l", "<cmd>write")
-vim.keymap.set("n", "h", "<cmd>write")
 --------------------------------------------------
 
 -- vim.opt settings
@@ -248,17 +245,17 @@ lazy.setup({
 
 -- Plugin config
 
-require("catppuccin").setup({
-	flavour = "macchiato", -- latte, frappe, macchiato, mocha
-	background = { -- :h background
-		light = "latte",
-		dark = "mocha",
-	},
-	transparent_background = true,
-})
-
--- setup must be called before loading
-vim.cmd.colorscheme("catppuccin")
+-- require("catppuccin").setup({
+-- 	flavour = "macchiato", -- latte, frappe, macchiato, mocha
+-- 	background = { -- :h background
+-- 		light = "latte",
+-- 		dark = "mocha",
+-- 	},
+-- 	transparent_background = true,
+-- })
+--
+-- -- setup must be called before loading
+-- vim.cmd.colorscheme("catppuccin")
 
 -- Tokyonight
 -- vim.opt.termguicolors = true
@@ -269,14 +266,14 @@ vim.cmd.colorscheme("catppuccin")
 -- vim.cmd([[colorscheme gruvbox]])
 
 -- Kanagawa
--- require("kanagawa").setup({
--- 	background = { -- map the value of 'background' option to a theme
--- 		dark = "wave", -- try "dragon" !
--- 		light = "lotus",
--- 	},
--- })
---
--- vim.cmd.colorscheme("kanagawa")
+require("kanagawa").setup({
+	background = { -- map the value of 'background' option to a theme
+		dark = "wave", -- try "dragon" !
+		light = "lotus",
+	},
+})
+
+vim.cmd.colorscheme("kanagawa")
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
@@ -466,7 +463,7 @@ require("conform").setup({
 		python = { "isort", "black" },
 		sh = { "shellcheck" },
 
-		["*"] = { "codespell" },
+		["*"] = { "codespell", "trim_whitespace", "trim_newlines" },
 	},
 })
 
