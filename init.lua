@@ -523,17 +523,14 @@ cmp.setup({
 		{ name = "buffer" },
 		{
 			name = "dictionary",
-			keyword_length = 5,
+			keyword_length = 3,
 		},
 	},
+
 	preselect = "item",
 	completion = {
 		completeopt = "menu,menuone,noinsert",
 	},
-	-- window = {
-	-- 	completion = cmp.config.window.bordered(),
-	-- 	documentation = cmp.config.window.bordered(),
-	-- },
 })
 
 require("lspconfig").bashls.setup({})
