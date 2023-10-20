@@ -302,10 +302,11 @@ require("nvim-web-devicons").setup({})
 vim.opt.list = true
 vim.opt.listchars:append("eol:↴")
 
-require("indent_blankline").setup({
-	space_char_blankline = " ",
-	show_current_context = true,
-	show_current_context_start = false,
+require("ibl").setup({
+	debounce = 100,
+	indent = { char = "|" },
+	whitespace = { highlight = { "Whitespace", "NonText" } },
+	scope = { exclude = { language = { "lua" } } },
 })
 
 -- Treesitter
