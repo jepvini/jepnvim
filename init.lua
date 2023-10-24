@@ -501,9 +501,6 @@ require("startup").setup({ theme = "startify" })
 
 ----------------------------------------------------
 
--- lsp zero
-local lsp_zero = require("lsp-zero")
-
 local cmp = require("cmp")
 local cmp_action = require("lsp-zero").cmp_action()
 local cmp_format = require("lsp-zero").cmp_format()
@@ -518,8 +515,8 @@ cmp.setup({
 		["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
 	}),
 	sources = {
-		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
 		{ name = "async_path" },
 		{ name = "buffer" },
 		{
@@ -528,24 +525,23 @@ cmp.setup({
 		},
 	},
 
-	preselect = "item",
+	preselect = "none",
 	completion = {
 		completeopt = "menu,menuone,noinsert",
 	},
 })
 
 require("lspconfig").bashls.setup({})
-require("lspconfig").ccls.setup({
-	require("lspconfig").lua_ls.setup({
-		settings = {
-			Lua = {
-				diagnostics = {
-					-- Get the language server to recognize the `vim` global
-					globals = { "vim" },
-				},
+require("lspconfig").clangd.setup({})
+require("lspconfig").lua_ls.setup({
+	settings = {
+		Lua = {
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { "vim" },
 			},
 		},
-	}),
+	},
 })
 require("lspconfig").nil_ls.setup({})
 require("lspconfig").pyright.setup({})
