@@ -191,6 +191,7 @@ lazy.setup({
 
 	-- Various
 	{ "LnL7/vim-nix" }, -- better support for nix
+	{ "stevearc/oil.nvim" }, -- file manager
 	{ "RRethy/vim-illuminate" }, -- illuminate same word as cursor
 	{ "akinsho/toggleterm.nvim" }, -- terminal
 	{ "editorconfig/editorconfig-vim" },
@@ -204,7 +205,7 @@ lazy.setup({
 	{ "nvim-tree/nvim-web-devicons" }, -- icons
 	{ "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
 	{ "pocco81/auto-save.nvim" }, -- auto save
-	{ "stevearc/conform.nvim", opts = {} }, -- formatter
+	{ "stevearc/conform.nvim" }, -- formatter
 	{ "tpope/vim-repeat" }, -- better .
 	{ "tpope/vim-surround" }, -- adds the command surround
 	{ "wellle/targets.vim" }, -- surround
@@ -380,6 +381,7 @@ local function my_on_attach(bufnr)
 	-- custom mappings
 	vim.keymap.set("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
 	vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
+	vim.keymap.set("n", "<CR>", api.node.open.tab, opts("Expand folder or go to file"))
 	vim.keymap.set("n", "L", api.node.open.tab, opts("Expand folder or go to file"))
 	vim.keymap.set("n", "H", api.node.navigate.parent_close, opts("Close parent folder"))
 	vim.keymap.set("n", "gh", api.tree.toggle_hidden_filter, opts("Toggle hiddem files"))
@@ -484,6 +486,18 @@ vim.keymap.set("n", "<leader>p", vim.cmd.UndotreeToggle)
 
 -- Auto save
 vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
+
+-- OilVim
+require("oil").setup({
+	default_file_explorer = true,
+	keymaps = {
+		["<CR>"] = "actions.select_tab",
+		["L"] = "action.select",
+		["H"] = "actions.parent",
+	},
+})
+
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Plugins end
 
