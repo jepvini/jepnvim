@@ -100,6 +100,10 @@ vim.keymap.set("n", "<leader>w", "<cmd>write<cr>")
 -- Quit file
 vim.keymap.set("n", "<leader>q", "<cmd>exit<cr>")
 
+-- Move half page
+vim.keymap.set("n", "J", "<C-d>zz")
+vim.keymap.set("n", "K", "<C-u>zz")
+
 -- Copy and paste to/from keyboard
 vim.keymap.set({ "n", "x", "v" }, "cp", '"+y')
 vim.keymap.set({ "n", "x", "v" }, "cv", '"+p')
@@ -110,9 +114,6 @@ vim.keymap.set({ "n", "x", "v" }, "x", '"_x')
 -- Move visual selecyed lines
 vim.keymap.set("v", "J", ":m '>+1<CR> gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR> gv=gv")
-
--- J keeps cursor in position
-vim.keymap.set("n", "J", "mzJ`z")
 
 -- Search terms stau in the middle
 vim.keymap.set("n", "n", "nzzzd")
@@ -197,6 +198,7 @@ lazy.setup({
 	{ "editorconfig/editorconfig-vim" },
 	{ "kyazdani42/nvim-tree.lua" }, -- file manager
 	{ "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
+  { "ThePrimeagen/vim-be-good" }, -- game
 	{ "mbbill/undotree" }, -- better undo
 	{ "norcalli/nvim-colorizer.lua" }, -- color over #999999
 	{ "numToStr/Comment.nvim" }, -- comment with leader cc
@@ -492,7 +494,7 @@ require("oil").setup({
 	default_file_explorer = true,
 	keymaps = {
 		["<CR>"] = "actions.select_tab",
-		["L"] = "action.select",
+		["L"] = "actions.select",
 		["H"] = "actions.parent",
 	},
 })
