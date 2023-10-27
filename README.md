@@ -21,7 +21,7 @@ at the moment h and l are disabled because I want to learn to usr e, b and w ins
 Disclaimer: The key notation is the same used by vim
 - `a` -> press a
 - `<leader>` -> press the leader key
-- `<leader>a` -> press the leader key then a 
+- `<leader>a` -> press the leader key then a
 - `<C-a>` -> ctrl-a, at the same time
 
 all the Keybindings are in normal mode, unless specified
@@ -33,7 +33,7 @@ all the Keybindings are in normal mode, unless specified
 - esc: `jk` -> insert mode
 - toggle autosave: `<leader>s`
 
-+ format file: `<leader>g` 
++ format file: `<leader>g`
 j next tab: `gt`
 
 - comment current line: `<leader>c`
@@ -50,7 +50,7 @@ j next tab: `gt`
 **nvim-tree** -> file manager
 - toggle open-close: `<leader>e`
 - expand folder or go to file: `L` *the file is open in a new tab*
-- back: `H` 
+- back: `H`
 - toggle hidden files: `gh`
 
  *telescope** -> fuzzy searcher
@@ -81,9 +81,9 @@ j next tab: `gt`
 of what:
 + inner word (bounded by non letters): `iw`
 + inner Word (bounded by spaces): `iW`
-+ etc. -> more in vim documentation 
++ etc. -> more in vim documentation
 
-current line is selected with `_`, whic+ current line 
+current line is selected with `_`, which+ current line
 
 what:
 - quotes: `'`
@@ -115,6 +115,10 @@ delete 3 lines: `3dd` -> for more info about dd keep reading
 
 - find char next: `f<char>` -> no select needed
 - find char prev: `F<char>` -> no select needed
+- find outher char next: `t<char>` -> no select needed
+- find outher char prev: `T<char>` -> no select needed
+- next: `;`
+- prev: `,`
 
 **Select** -> on what
 char
@@ -132,13 +136,13 @@ bigword -> delimited by spaces
 line
 - from cursor to end: `$`
 - from cursor to beginning: `0`
-- from cursor to first non blank of the line: `^`
+- from cursor to first non blank of the line: `-` or `^`
 
 for current line just repeat the last letter:
 - yank line: `yy`
 - delete line: `dd`
 - change line: `cc`
-- capitalize line: `gUU` 
+- capitalize line: `guu`
 
 others lines:
 - current line and previous: `k`
@@ -153,7 +157,7 @@ in and out:
 whole file:
 - top: `gg`
 - bottom: `G`
- 
+
 **Move the cursor**
 - page Up: `<C-f>` -> forward
 - page Down: `<C-b>` -> back
@@ -220,4 +224,4 @@ numerical registers are used for yank and delete
 
 `+` is the system register
 yank line to system register: `"+yy`
-paste from system register: `"+p` -> although this works `Control-Shift-v` is more convenient 
+paste from system register: `"+p` -> although this works `Control-Shift-v` is more convenient
