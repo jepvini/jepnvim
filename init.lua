@@ -198,7 +198,7 @@ lazy.setup({
 	{ "editorconfig/editorconfig-vim" },
 	{ "kyazdani42/nvim-tree.lua" }, -- file manager
 	{ "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
-  { "ThePrimeagen/vim-be-good" }, -- game
+	{ "ThePrimeagen/vim-be-good" }, -- game
 	{ "mbbill/undotree" }, -- better undo
 	{ "norcalli/nvim-colorizer.lua" }, -- color over #999999
 	{ "numToStr/Comment.nvim" }, -- comment with leader cc
@@ -471,8 +471,8 @@ require("conform").setup({
 	formatters_by_ft = {
 		c = { "clang_format" },
 		cpp = { "clang_format" },
+		json = { "jq" },
 		lua = { "stylua" },
-		md = { "clang_format" },
 		nix = { "alejandra" },
 		python = { "isort", "black" },
 		sh = { "shellcheck" },
@@ -521,7 +521,9 @@ local cmp = require("cmp")
 local cmp_action = require("lsp-zero").cmp_action()
 local cmp_format = require("lsp-zero").cmp_format()
 
-require("luasnip.loaders.from_vscode").lazy_load()
+-- load snippets from the snip folder
+require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/nvim/snip/" } })
+-- require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
 	formatting = cmp_format,
