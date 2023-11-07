@@ -192,6 +192,7 @@ lazy.setup({
 
   -- Various
   { "LnL7/vim-nix" }, -- better support for nix
+  { "folke/trouble.nvim" }, -- debug
   { "RRethy/vim-illuminate" }, -- illuminate same word as cursor
   { "ThePrimeagen/vim-be-good" }, -- game
   { "akinsho/toggleterm.nvim" }, -- terminal
@@ -402,6 +403,8 @@ require("nvim-tree").setup({
 vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>")
 
 -- Telescope
+local trouble = require("trouble.providers.telescope")
+
 require("telescope").setup({
   pickers = {
     oldfiles = {
@@ -513,6 +516,11 @@ require("oil").setup({
 })
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+-- Trouble
+vim.keymap.set("n", "<leader>xx", function()
+  require("trouble").toggle()
+end)
 
 -- Plugins end
 
