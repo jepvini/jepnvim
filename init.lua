@@ -192,13 +192,12 @@ lazy.setup({
 
 	-- Various
 	{ "LnL7/vim-nix" }, -- better support for nix
-	{ "stevearc/oil.nvim" }, -- file manager
 	{ "RRethy/vim-illuminate" }, -- illuminate same word as cursor
+	{ "ThePrimeagen/vim-be-good" }, -- game
 	{ "akinsho/toggleterm.nvim" }, -- terminal
 	{ "editorconfig/editorconfig-vim" },
 	{ "kyazdani42/nvim-tree.lua" }, -- file manager
 	{ "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
-	{ "ThePrimeagen/vim-be-good" }, -- game
 	{ "mbbill/undotree" }, -- better undo
 	{ "norcalli/nvim-colorizer.lua" }, -- color over #999999
 	{ "numToStr/Comment.nvim" }, -- comment with leader cc
@@ -208,6 +207,8 @@ lazy.setup({
 	{ "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
 	{ "pocco81/auto-save.nvim" }, -- auto save
 	{ "stevearc/conform.nvim" }, -- formatter
+	{ "stevearc/oil.nvim" }, -- file manager
+	{ "tpope/vim-fugitive" }, -- git command from vim
 	{ "tpope/vim-repeat" }, -- better .
 	{ "tpope/vim-surround" }, -- adds the command surround
 	{ "wellle/targets.vim" }, -- surround
@@ -475,7 +476,7 @@ require("conform").setup({
 		lua = { "stylua" },
 		nix = { "alejandra" },
 		python = { "isort", "black" },
-		sh = { "shellharden" },
+		sh = { "beautysh" },
 
 		["*"] = { "codespell", "trim_whitespace", "trim_newlines" },
 	},
