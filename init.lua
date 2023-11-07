@@ -157,25 +157,25 @@ vim.keymap.set("n", "<leader>u", "viWo<esc>gul")
 local lazy = {}
 
 function lazy.install(path)
-	if not vim.loop.fs_stat(path) then
-		print("Installing lazy.nvim....")
-		vim.fn.system({
-			"git",
-			"clone",
-			"--filter=blob:none",
-			"https://github.com/folke/lazy.nvim.git",
-			"--branch=stable", -- latest stable release
-			path,
-		})
-	end
+  if not vim.loop.fs_stat(path) then
+    print("Installing lazy.nvim....")
+    vim.fn.system({
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      "--branch=stable", -- latest stable release
+      path,
+    })
+  end
 end
 
 function lazy.setup(plugins)
-	-- You can "comment out" the line below after lazy.nvim is installed
-	lazy.install(lazy.path)
+  -- You can "comment out" the line below after lazy.nvim is installed
+  lazy.install(lazy.path)
 
-	vim.opt.rtp:prepend(lazy.path)
-	require("lazy").setup(plugins, lazy.opts)
+  vim.opt.rtp:prepend(lazy.path)
+  require("lazy").setup(plugins, lazy.opts)
 end
 
 lazy.path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -184,67 +184,67 @@ lazy.opts = {}
 -- Plugin space
 
 lazy.setup({
-	-- Themes
-	{ "ellisonleao/gruvbox.nvim", priority = 1000 },
-	{ "folke/tokyonight.nvim", priority = 10000 },
-	{ "rebelot/kanagawa.nvim", priority = 1000 },
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  -- Themes
+  { "ellisonleao/gruvbox.nvim", priority = 1000 },
+  { "folke/tokyonight.nvim", priority = 10000 },
+  { "rebelot/kanagawa.nvim", priority = 1000 },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
-	-- Various
-	{ "LnL7/vim-nix" }, -- better support for nix
-	{ "RRethy/vim-illuminate" }, -- illuminate same word as cursor
-	{ "ThePrimeagen/vim-be-good" }, -- game
-	{ "akinsho/toggleterm.nvim" }, -- terminal
-	{ "editorconfig/editorconfig-vim" },
-	{ "kyazdani42/nvim-tree.lua" }, -- file manager
-	{ "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
-	{ "mbbill/undotree" }, -- better undo
-	{ "norcalli/nvim-colorizer.lua" }, -- color over #999999
-	{ "numToStr/Comment.nvim" }, -- comment with leader cc
-	{ "nvim-lualine/lualine.nvim" }, -- status line theme
-	{ "nvim-telescope/telescope.nvim", tag = "0.1.2", dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
-	{ "nvim-tree/nvim-web-devicons" }, -- icons
-	{ "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
-	{ "pocco81/auto-save.nvim" }, -- auto save
-	{ "stevearc/conform.nvim" }, -- formatter
-	{ "stevearc/oil.nvim" }, -- file manager
-	{ "tpope/vim-fugitive" }, -- git command from vim
-	{ "tpope/vim-repeat" }, -- better .
-	{ "tpope/vim-surround" }, -- adds the command surround
-	{ "wellle/targets.vim" }, -- surround
-	{ "zhimsel/vim-stay" }, -- cursor stays in place on file closing and reopening
+  -- Various
+  { "LnL7/vim-nix" }, -- better support for nix
+  { "RRethy/vim-illuminate" }, -- illuminate same word as cursor
+  { "ThePrimeagen/vim-be-good" }, -- game
+  { "akinsho/toggleterm.nvim" }, -- terminal
+  { "editorconfig/editorconfig-vim" },
+  { "kyazdani42/nvim-tree.lua" }, -- file manager
+  { "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
+  { "mbbill/undotree" }, -- better undo
+  { "norcalli/nvim-colorizer.lua" }, -- color over #999999
+  { "numToStr/Comment.nvim" }, -- comment with leader cc
+  { "nvim-lualine/lualine.nvim" }, -- status line theme
+  { "nvim-telescope/telescope.nvim", tag = "0.1.2", dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
+  { "nvim-tree/nvim-web-devicons" }, -- icons
+  { "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
+  { "pocco81/auto-save.nvim" }, -- auto save
+  { "stevearc/conform.nvim" }, -- formatter
+  { "stevearc/oil.nvim" }, -- file manager
+  { "tpope/vim-fugitive" }, -- git command from vim
+  { "tpope/vim-repeat" }, -- better .
+  { "tpope/vim-surround" }, -- adds the command surround
+  { "wellle/targets.vim" }, -- surround
+  { "zhimsel/vim-stay" }, -- cursor stays in place on file closing and reopening
 
-	-- StartUp
-	{ "startup-nvim/startup.nvim" }, -- startup page
+  -- StartUp
+  { "startup-nvim/startup.nvim" }, -- startup page
 
-	-- Lsp zero
-	{
-		{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
+  -- Lsp zero
+  {
+    { "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
 
-		-- LSP Support
-		{
-			"neovim/nvim-lspconfig",
-			dependencies = {
-				{ "hrsh7th/cmp-nvim-lsp" },
-			},
-		},
+    -- LSP Support
+    {
+      "neovim/nvim-lspconfig",
+      dependencies = {
+        { "hrsh7th/cmp-nvim-lsp" },
+      },
+    },
 
-		-- Autocompletion
-		{
-			"hrsh7th/nvim-cmp",
-			dependencies = {
-				{
-					"L3MON4D3/LuaSnip",
-					dependencies = { "rafamadriz/friendly-snippets" },
-				},
-				{ "hrsh7th/cmp-buffer" }, -- buffer
-				{ "hrsh7th/cmp-nvim-lsp" }, -- Lsp
-				{ "saadparwaiz1/cmp_luasnip" }, -- snippets command
-				{ "uga-rosa/cmp-dictionary" }, -- dictionary auto
-				{ "FelipeLema/cmp-async-path" }, -- path outo asynchronous
-			},
-		},
-	},
+    -- Autocompletion
+    {
+      "hrsh7th/nvim-cmp",
+      dependencies = {
+        {
+          "L3MON4D3/LuaSnip",
+          dependencies = { "rafamadriz/friendly-snippets" },
+        },
+        { "hrsh7th/cmp-buffer" }, -- buffer
+        { "hrsh7th/cmp-nvim-lsp" }, -- Lsp
+        { "saadparwaiz1/cmp_luasnip" }, -- snippets command
+        { "uga-rosa/cmp-dictionary" }, -- dictionary auto
+        { "FelipeLema/cmp-async-path" }, -- path outo asynchronous
+      },
+    },
+  },
 })
 
 -- Plugin config
@@ -271,10 +271,10 @@ lazy.setup({
 
 -- Kanagawa
 require("kanagawa").setup({
-	background = { -- map the value of 'background' option to a theme
-		dark = "wave", -- try "dragon" !
-		light = "lotus",
-	},
+  background = { -- map the value of 'background' option to a theme
+    dark = "wave", -- try "dragon" !
+    light = "lotus",
+  },
 })
 
 vim.cmd.colorscheme("kanagawa")
@@ -288,15 +288,15 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#C8C093" })
 vim.opt.showmode = false
 
 require("lualine").setup({
-	options = {
-		theme = "auto",
-		icons_enabled = true,
-		component_separators = { left = "", right = "" },
-		section_separators = { left = "", right = "" },
-		disabled_filetypes = {
-			statusline = { "NvimTree" },
-		},
-	},
+  options = {
+    theme = "auto",
+    icons_enabled = true,
+    component_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
+    disabled_filetypes = {
+      statusline = { "NvimTree" },
+    },
+  },
 })
 
 -- Nvim web devicons
@@ -307,43 +307,43 @@ vim.opt.list = true
 vim.opt.listchars:append("eol:↴")
 
 require("ibl").setup({
-	debounce = 100,
-	indent = { char = "|" },
-	whitespace = { highlight = { "Whitespace", "NonText" } },
-	scope = { exclude = { language = { "lua" } } },
+  debounce = 100,
+  indent = { char = "|" },
+  whitespace = { highlight = { "Whitespace", "NonText" } },
+  scope = { exclude = { language = { "lua" } } },
 })
 
 -- Treesitter
 require("nvim-treesitter.configs").setup({
-	highlight = {
-		enable = true,
-	},
-	indent = {
-		enable = true,
-	},
-	ensure_installed = {
-		"bash",
-		"c",
-		"cpp",
-		"ini",
-		"json",
-		"latex",
-		"lua",
-		"markdown",
-		"nix",
-		"python",
-		"rust",
-		"yaml",
-	},
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "<CR>",
-			scope_incremental = "<CR>",
-			node_incremental = "<TAB>",
-			node_decremental = "<S-TAB>",
-		},
-	},
+  highlight = {
+    enable = true,
+  },
+  indent = {
+    enable = true,
+  },
+  ensure_installed = {
+    "bash",
+    "c",
+    "cpp",
+    "ini",
+    "json",
+    "latex",
+    "lua",
+    "markdown",
+    "nix",
+    "python",
+    "rust",
+    "yaml",
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<CR>",
+      scope_incremental = "<CR>",
+      node_incremental = "<TAB>",
+      node_decremental = "<S-TAB>",
+    },
+  },
 })
 
 -- Targets
@@ -351,90 +351,90 @@ vim.g.targets_aiAI = "aiAI"
 
 -- Comment
 require("Comment").setup({
-	toggler = {
-		-- Line-comment toggle keymap
-		line = "<leader>c",
-		-- Block-comment toggle keymap
-		block = "<leader>bc",
-	},
-	opleader = {
-		-- Line-comment keymap
-		line = "<leader>c",
-		-- Block-comment keymap
-		block = "<leader>b",
-	},
-	extra = {
-		-- Add comment at the end of line
-		eol = "<leader>a",
-	},
+  toggler = {
+    -- Line-comment toggle keymap
+    line = "<leader>c",
+    -- Block-comment toggle keymap
+    block = "<leader>bc",
+  },
+  opleader = {
+    -- Line-comment keymap
+    line = "<leader>c",
+    -- Block-comment keymap
+    block = "<leader>b",
+  },
+  extra = {
+    -- Add comment at the end of line
+    eol = "<leader>a",
+  },
 })
 
 -- Nvim tree
 
 local function my_on_attach(bufnr)
-	local api = require("nvim-tree.api")
+  local api = require("nvim-tree.api")
 
-	local function opts(desc)
-		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-	end
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
 
-	-- default mappings
-	api.config.mappings.default_on_attach(bufnr)
+  -- default mappings
+  api.config.mappings.default_on_attach(bufnr)
 
-	-- custom mappings
-	vim.keymap.set("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
-	vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
-	vim.keymap.set("n", "<CR>", api.node.open.tab, opts("Expand folder or go to file"))
-	vim.keymap.set("n", "L", api.node.open.tab, opts("Expand folder or go to file"))
-	vim.keymap.set("n", "H", api.node.navigate.parent_close, opts("Close parent folder"))
-	vim.keymap.set("n", "gh", api.tree.toggle_hidden_filter, opts("Toggle hiddem files"))
+  -- custom mappings
+  vim.keymap.set("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
+  vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
+  vim.keymap.set("n", "<CR>", api.node.open.tab, opts("Expand folder or go to file"))
+  vim.keymap.set("n", "L", api.node.open.tab, opts("Expand folder or go to file"))
+  vim.keymap.set("n", "H", api.node.navigate.parent_close, opts("Close parent folder"))
+  vim.keymap.set("n", "gh", api.tree.toggle_hidden_filter, opts("Toggle hiddem files"))
 end
 
 require("nvim-tree").setup({
-	actions = {
-		open_file = {
-			quit_on_open = true,
-		},
-	},
-	on_attach = my_on_attach,
+  actions = {
+    open_file = {
+      quit_on_open = true,
+    },
+  },
+  on_attach = my_on_attach,
 })
 --
 vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>")
 
 -- Telescope
 require("telescope").setup({
-	pickers = {
-		oldfiles = {
-			mappings = {
-				i = {
-					["<cr>"] = "select_tab",
-				},
-				n = {
-					["<cr>"] = "select_tab",
-				},
-			},
-		},
-		find_files = {
-			mappings = {
-				i = {
-					["<cr>"] = "select_tab",
-				},
-				n = {
-					["<cr>"] = "select_tab",
-				},
-			},
-		},
-		live_grep = {
-			mappings = {
-				i = {
-					["<cr>"] = "select_tab",
-				},
-				n = {
-					["<cr>"] = "select_tab",
-				},
-			},
-		},
-	},
+  pickers = {
+    oldfiles = {
+      mappings = {
+        i = {
+          ["<cr>"] = "select_tab",
+        },
+        n = {
+          ["<cr>"] = "select_tab",
+        },
+      },
+    },
+    find_files = {
+      mappings = {
+        i = {
+          ["<cr>"] = "select_tab",
+        },
+        n = {
+          ["<cr>"] = "select_tab",
+        },
+      },
+    },
+    live_grep = {
+      mappings = {
+        i = {
+          ["<cr>"] = "select_tab",
+        },
+        n = {
+          ["<cr>"] = "select_tab",
+        },
+      },
+    },
+  },
 })
 
 vim.keymap.set("n", "<leader>r", "<cmd>Telescope oldfiles<cr>")
@@ -444,9 +444,9 @@ vim.keymap.set("n", "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>"
 
 -- Toggleterminal
 require("toggleterm").setup({
-	open_mapping = "<C-t>",
-	direction = "horizontal",
-	shade_terminals = true,
+  open_mapping = "<C-t>",
+  direction = "horizontal",
+  shade_terminals = true,
 })
 
 -- Colorizer
@@ -457,29 +457,41 @@ require("illuminate").configure({})
 
 -- Formatter
 require("conform").setup({
-	vim.api.nvim_create_user_command("Format", function(args)
-		local range = nil
-		if args.count ~= -1 then
-			local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
-			range = {
-				start = { args.line1, 0 },
-				["end"] = { args.line2, end_line:len() },
-			}
-		end
-		require("conform").format({ async = true, lsp_fallback = true, range = range })
-	end, { range = true }),
+  vim.api.nvim_create_user_command("Format", function(args)
+    local range = nil
+    if args.count ~= -1 then
+      local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+      range = {
+        start = { args.line1, 0 },
+        ["end"] = { args.line2, end_line:len() },
+      }
+    end
+    require("conform").format({ async = true, lsp_fallback = true, range = range })
+  end, { range = true }),
 
-	formatters_by_ft = {
-		c = { "clang_format" },
-		cpp = { "clang_format" },
-		json = { "jq" },
-		lua = { "stylua" },
-		nix = { "alejandra" },
-		python = { "isort", "black" },
-		sh = { "beautysh" },
+  formatters = {
+    beautysh = {
+      command = "beautysh",
+      prepend_args = { "--indent-size", "2" },
+    },
+    stylua = {
+      command = "stylua",
+      prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
+    },
+  },
 
-		["*"] = { "codespell", "trim_whitespace", "trim_newlines" },
-	},
+  formatters_by_ft = {
+    c = { "clang_format" },
+    cpp = { "clang_format" },
+    json = { "jq" },
+    lua = { "stylua" },
+    md = { "mdformat" },
+    nix = { "alejandra" },
+    python = { "isort", "black" },
+    sh = { "beautysh" },
+
+    ["*"] = { "codespell", "trim_whitespace", "trim_newlines" },
+  },
 })
 
 vim.keymap.set("n", "<leader>g", vim.cmd.Format)
@@ -492,12 +504,12 @@ vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
 
 -- OilVim
 require("oil").setup({
-	default_file_explorer = true,
-	keymaps = {
-		["<CR>"] = "actions.select_tab",
-		["L"] = "actions.select",
-		["H"] = "actions.parent",
-	},
+  default_file_explorer = true,
+  keymaps = {
+    ["<CR>"] = "actions.select_tab",
+    ["L"] = "actions.select",
+    ["H"] = "actions.parent",
+  },
 })
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
@@ -527,40 +539,40 @@ require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/nvim/sni
 -- require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
-	formatting = cmp_format,
-	mapping = cmp.mapping.preset.insert({
-		["<CR>"] = cmp.mapping.confirm({ select = false }),
-		["<Tab>"] = cmp_action.luasnip_supertab(),
-		["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
-	}),
-	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "async_path" },
-		{ name = "buffer" },
-		{
-			name = "dictionary",
-			keyword_length = 3,
-		},
-	},
+  formatting = cmp_format,
+  mapping = cmp.mapping.preset.insert({
+    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+    ["<Tab>"] = cmp_action.luasnip_supertab(),
+    ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
+  }),
+  sources = {
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "async_path" },
+    { name = "buffer" },
+    {
+      name = "dictionary",
+      keyword_length = 3,
+    },
+  },
 
-	preselect = "none",
-	completion = {
-		completeopt = "menu,menuone,noinsert",
-	},
+  preselect = "none",
+  completion = {
+    completeopt = "menu,menuone,noinsert",
+  },
 })
 
 require("lspconfig").bashls.setup({})
 require("lspconfig").clangd.setup({})
 require("lspconfig").lua_ls.setup({
-	settings = {
-		Lua = {
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { "vim" },
-			},
-		},
-	},
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { "vim" },
+      },
+    },
+  },
 })
 require("lspconfig").nil_ls.setup({})
 require("lspconfig").pyright.setup({})
