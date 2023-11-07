@@ -475,7 +475,7 @@ require("conform").setup({
 		lua = { "stylua" },
 		nix = { "alejandra" },
 		python = { "isort", "black" },
-		sh = { "shellcheck" },
+		sh = { "shellharden" },
 
 		["*"] = { "codespell", "trim_whitespace", "trim_newlines" },
 	},
