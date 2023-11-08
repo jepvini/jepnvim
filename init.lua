@@ -455,7 +455,7 @@ require("conform").setup({
         ["end"] = { args.line2, end_line:len() },
       }
     end
-    require("conform").format({ async = true, lsp_fallback = true, range = range })
+    require("conform").format({ async = true, lsp_fallback = false, range = range })
   end, { range = true }),
 
   formatters = {
@@ -533,7 +533,7 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+  nmap("<leader>nn", vim.lsp.buf.rename, "re[n]ame")
   nmap("<leader>oa", vim.lsp.buf.code_action, "c[O]de [A]ction")
 
   nmap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
@@ -541,7 +541,7 @@ local on_attach = function(_, bufnr)
   nmap("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
   nmap("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
   nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]symbols")
-  nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]symbols")
+  nmap("<leader>Ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]symbols")
 
   -- See `:help K` for why this keymap
   nmap("\"", vim.lsp.buf.hover, "Hover Documentation")
