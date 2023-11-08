@@ -59,6 +59,9 @@ vim.opt.shiftwidth = 2
 -- Tab are spaces
 vim.opt.expandtab = true
 
+-- Disable autocomment prssing on new line
+vim.cmd([[autocmd FileType * set formatoptions-=ro]])
+
 -- always have min 8 lines from cursor and end of screen
 vim.opt.scrolloff = 8
 
