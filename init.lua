@@ -444,9 +444,9 @@ require("colorizer").setup()
 -- Illuminate
 require("illuminate").configure({})
 
--- Formatter
+-- Conform
 require("conform").setup({
-  vim.api.nvim_create_user_command("Format", function(args)
+  vim.api.nvim_create_user_command("Conform", function(args)
     local range = nil
     if args.count ~= -1 then
       local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
@@ -483,7 +483,7 @@ require("conform").setup({
   },
 })
 
-vim.keymap.set("n", "<leader>g", vim.cmd.Format)
+vim.keymap.set("n", "<leader>g", vim.cmd.Conform)
 
 -- Undotree
 vim.keymap.set("n", "<leader>p", vim.cmd.UndotreeToggle)
@@ -590,6 +590,10 @@ lspconfig.lua_ls.setup({
       },
     },
   },
+})
+lspconfig.marksman.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
 })
 lspconfig.nil_ls.setup({
   capabilities = capabilities,
