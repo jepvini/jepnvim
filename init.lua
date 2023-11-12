@@ -98,9 +98,6 @@ vim.g.maplocalleader = " "
 -- jk as esc
 vim.keymap.set({ "i" }, "jk", "<esc>")
 
--- Save file
-vim.keymap.set("n", "<leader>w", "<cmd>write<cr>")
-
 -- Quit file
 vim.keymap.set("n", "<leader>q", "<cmd>exit<cr>")
 
@@ -121,6 +118,10 @@ vim.keymap.set("v", "K", ":m '<-2<CR> gv=gv")
 
 -- Replace without touching the buffer
 vim.keymap.set("x", "<leader>p", '"_dP')
+
+-- Quote word
+vim.keymap.set("n", "<leader>s", 'bi"<esc>ea"<esc>')
+vim.keymap.set("n", "<leader>s", 'Bi"<esc>Ea"<esc>')
 
 -- Sort selected text
 vim.keymap.set("v", "<leader>S", ":sort<cr>")
@@ -172,37 +173,37 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- Themes
-  { "ellisonleao/gruvbox.nvim",           priority = 1000 },
-  { "folke/tokyonight.nvim",              priority = 10000 },
-  { "rebelot/kanagawa.nvim",              priority = 1000 },
-  { "catppuccin/nvim",                    name = "catppuccin", priority = 1000 },
+  { "ellisonleao/gruvbox.nvim", priority = 1000 },
+  { "folke/tokyonight.nvim", priority = 10000 },
+  { "rebelot/kanagawa.nvim", priority = 1000 },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
   -- No config
   { "tpope/vim-fugitive" }, -- git command from vim
 
   -- Various
-  { "LnL7/vim-nix" },                                                                                        -- better support for nix
-  { "RRethy/vim-illuminate" },                                                                               -- illuminate same word as cursor
-  { "ThePrimeagen/vim-be-good" },                                                                            -- game
-  { "akinsho/toggleterm.nvim" },                                                                             -- terminal
+  { "LnL7/vim-nix" }, -- better support for nix
+  { "RRethy/vim-illuminate" }, -- illuminate same word as cursor
+  { "ThePrimeagen/vim-be-good" }, -- game
+  { "akinsho/toggleterm.nvim" }, -- terminal
   { "editorconfig/editorconfig-vim" },
-  { "folke/trouble.nvim" },                                                                                  -- debug
-  { "kyazdani42/nvim-tree.lua" },                                                                            -- file manager
-  { "lukas-reineke/indent-blankline.nvim" },                                                                 -- indent blankline
-  { "mbbill/undotree" },                                                                                     -- better undo
-  { "norcalli/nvim-colorizer.lua" },                                                                         -- color over #999999
-  { "numToStr/Comment.nvim" },                                                                               -- comment with leader cc
-  { "nvim-lualine/lualine.nvim" },                                                                           -- status line theme
-  { "nvim-telescope/telescope.nvim",      tag = "0.1.2",       dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
-  { "nvim-tree/nvim-web-devicons" },                                                                         -- icons
-  { "nvim-treesitter/nvim-treesitter" },                                                                     -- fuzzy search
-  { "pocco81/auto-save.nvim" },                                                                              -- auto save
-  { "stevearc/conform.nvim" },                                                                               -- formatter
-  { "stevearc/oil.nvim" },                                                                                   -- file manager
-  { "tpope/vim-repeat" },                                                                                    -- better .
-  { "tpope/vim-surround" },                                                                                  -- adds the command surround
-  { "wellle/targets.vim" },                                                                                  -- surround
-  { "zhimsel/vim-stay" },                                                                                    -- cursor stays in place on file closing and reopening
+  { "folke/trouble.nvim" }, -- debug
+  { "kyazdani42/nvim-tree.lua" }, -- file manager
+  { "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
+  { "mbbill/undotree" }, -- better undo
+  { "norcalli/nvim-colorizer.lua" }, -- color over #999999
+  { "numToStr/Comment.nvim" }, -- comment with leader cc
+  { "nvim-lualine/lualine.nvim" }, -- status line theme
+  { "nvim-telescope/telescope.nvim", tag = "0.1.2", dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
+  { "nvim-tree/nvim-web-devicons" }, -- icons
+  { "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
+  { "pocco81/auto-save.nvim" }, -- auto save
+  { "stevearc/conform.nvim" }, -- formatter
+  { "stevearc/oil.nvim" }, -- file manager
+  { "tpope/vim-repeat" }, -- better .
+  { "tpope/vim-surround" }, -- adds the command surround
+  { "wellle/targets.vim" }, -- surround
+  { "zhimsel/vim-stay" }, -- cursor stays in place on file closing and reopening
 
   {
     -- LSP Configuration & Plugins
@@ -260,7 +261,7 @@ require("lazy").setup({
 
 -- Kanagawa
 require("kanagawa").setup({
-  background = {   -- map the value of 'background' option to a theme
+  background = { -- map the value of 'background' option to a theme
     dark = "wave", -- try "dragon" !
     light = "lotus",
   },
@@ -488,9 +489,6 @@ vim.keymap.set("n", "<leader>g", vim.cmd.Conform)
 -- Undotree
 vim.keymap.set("n", "<leader>p", vim.cmd.UndotreeToggle)
 
--- Auto save
-vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
-
 -- OilVim
 require("oil").setup({
   default_file_explorer = true,
@@ -544,7 +542,7 @@ local on_attach = function(_, bufnr)
   nmap("<leader>Ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]symbols")
 
   -- See `:help K` for why this keymap
-  nmap("\"", vim.lsp.buf.hover, "Hover Documentation")
+  nmap("<leader>i", vim.lsp.buf.hover, "Hover Documentation")
   nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 
   -- Lesser used LSP functionality
