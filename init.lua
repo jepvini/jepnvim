@@ -121,7 +121,7 @@ vim.keymap.set("x", "<leader>p", '"_dP')
 
 -- Quote word
 vim.keymap.set("n", "<leader>s", 'bi"<esc>ea"<esc>')
-vim.keymap.set("n", "<leader>s", 'Bi"<esc>Ea"<esc>')
+vim.keymap.set("n", "<leader>S", 'Bi"<esc>Ea"<esc>')
 
 -- Sort selected text
 vim.keymap.set("v", "<leader>S", ":sort<cr>")
