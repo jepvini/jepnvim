@@ -466,7 +466,10 @@ require("toggleterm").setup({
 })
 
 -- Colorizer
-require("colorizer").setup()
+require("colorizer").setup({
+  css = { names = false },
+  html = { names = false },
+})
 
 -- Illuminate
 require("illuminate").configure({})
