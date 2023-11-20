@@ -518,17 +518,17 @@ vim.keymap.set("n", "<leader>g", vim.cmd.Conform)
 -- Undotree
 vim.keymap.set("n", "<leader>p", vim.cmd.UndotreeToggle)
 
--- OilVim
-require("oil").setup({
-  default_file_explorer = true,
-  keymaps = {
-    ["<CR>"] = "actions.select_tab",
-    ["L"] = "actions.select",
-    ["H"] = "actions.parent",
-  },
-})
+-- -- OilVim
+-- require("oil").setup({
+--   default_file_explorer = true,
+--   keymaps = {
+--     ["<CR>"] = "actions.select_tab",
+--     ["L"] = "actions.select",
+--     ["H"] = "actions.parent",
+--   },
+-- })
 
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+-- vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Trouble
 vim.keymap.set("n", "<leader>xx", function()
