@@ -404,14 +404,15 @@ require("telescope").setup({
           ["<cr>"] = "select_tab",
         },
       },
-      find_files = {
-        mappings = {
-          i = {
-            ["<cr>"] = "select_tab",
-          },
-          n = {
-            ["<cr>"] = "select_tab",
-          },
+    },
+    find_files = {
+      find_command = { 'rg', '/', '--files', '--glob', '!.*', '--glob', '!boot/', '--glob', '!dev/', '--glob', '!nix/', '--glob', '!proc/', '--glob', '!root/', '--glob', '!run/', '--glob', '!srv/', '--glob', '!sys/', '--glob', '!tmp/', '--glob', '!usr/', '--glob', '!var/', '--glob', '!Git' },
+      mappings = {
+        i = {
+          ["<cr>"] = "select_tab",
+        },
+        n = {
+          ["<cr>"] = "select_tab",
         },
       },
     },
@@ -429,11 +430,7 @@ require("telescope").setup({
 })
 
 vim.keymap.set("n", "<leader>R", "<cmd>Telescope registers<cr>")
-vim.keymap.set(
-  "n",
-  "<leader>ff",
-  "<cmd>:Telescope find_files find_command=rg,/,--files,--glob,!.*,--glob,!boot/,--glob,!dev/,--glob,!nix/,--glob,!proc/,--glob,!root/,--glob,!run/,--glob,!srv/,--glob,!sys/,--glob,!tmp/,--glob,!usr/,--glob,!var/,--glob,!Git/<cr>"
-)
+vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
 vim.keymap.set("n", "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
 vim.keymap.set("n", "<leader>r", "<cmd>Telescope oldfiles<cr>")
