@@ -186,6 +186,7 @@ require("lazy").setup({
   { "RRethy/vim-illuminate" }, -- illuminate same word as cursor
   { "ThePrimeagen/vim-be-good" }, -- game
   { "akinsho/toggleterm.nvim" }, -- terminal
+  { "axkirillov/easypick.nvim" }, -- create telescope pickers
   { "editorconfig/editorconfig-vim" },
   { "folke/trouble.nvim" }, -- debug
   { "kyazdani42/nvim-tree.lua" }, -- file manager
@@ -204,7 +205,7 @@ require("lazy").setup({
   { "tpope/vim-surround" }, -- adds the command surround
   { "wellle/targets.vim" }, -- surround
   { "zhimsel/vim-stay" }, -- cursor stays in place on file closing and reopening
-  { "axkirillov/easypick.nvim" }, -- create telescope pickers
+  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" }, -- md previwer
 
   {
     -- LSP Configuration & Plugins
@@ -406,7 +407,37 @@ require("telescope").setup({
       },
     },
     find_files = {
-      find_command = { 'rg', '/', '--files', '--glob', '!.*', '--glob', '!boot/', '--glob', '!dev/', '--glob', '!nix/', '--glob', '!proc/', '--glob', '!root/', '--glob', '!run/', '--glob', '!srv/', '--glob', '!sys/', '--glob', '!tmp/', '--glob', '!usr/', '--glob', '!var/', '--glob', '!Git' },
+      find_command = {
+        "rg",
+        "/",
+        "--files",
+        "--glob",
+        "!.*",
+        "--glob",
+        "!boot/",
+        "--glob",
+        "!dev/",
+        "--glob",
+        "!nix/",
+        "--glob",
+        "!proc/",
+        "--glob",
+        "!root/",
+        "--glob",
+        "!run/",
+        "--glob",
+        "!srv/",
+        "--glob",
+        "!sys/",
+        "--glob",
+        "!tmp/",
+        "--glob",
+        "!usr/",
+        "--glob",
+        "!var/",
+        "--glob",
+        "!Git",
+      },
       mappings = {
         i = {
           ["<cr>"] = "select_tab",
@@ -515,23 +546,14 @@ vim.keymap.set("n", "<leader>g", vim.cmd.Conform)
 -- Undotree
 vim.keymap.set("n", "<leader>p", vim.cmd.UndotreeToggle)
 
--- -- OilVim
--- require("oil").setup({
---   default_file_explorer = true,
---   keymaps = {
---     ["<CR>"] = "actions.select_tab",
---     ["L"] = "actions.select",
---     ["H"] = "actions.parent",
---   },
--- })
-
--- vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
 -- Trouble
 vim.keymap.set("n", "<leader>xx", function()
   require("trouble").toggle()
 end)
 
+-- Glow
+require("glow").setup({
+})
 -- Plugins end
 
 ----------------------------------------------------

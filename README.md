@@ -6,6 +6,30 @@
 
 Lsp servers and formatters are downloaded manually, it's easier using nixOs, if you want to auto install them look at the [lsp-zero](%22https://github.com/VonHeikemen/lsp-zero.nvim%22) github
 
+##### Lsp servers
+* bashls
+* clangd
+* lua_ls
+* marksman
+* nil_ls
+* pyright
+* rust_analyzer
+* yamlls
+
+##### formatters
+* clang_format
+* clang_format
+* jq
+* stylua
+* mdformat
+* alejandra
+* isort
+* black
+* beautysh
+* codespell
+* trim_whitespace
+* trim_newlines
+
 ### Usage:
 
 The leader key is `space`
@@ -29,13 +53,11 @@ all the Keybindings are in normal mode, unless specified
 
 ### Base
 
-- save file: `<leader>w`
 - exit file without closing the window: `<leader>q`
 - esc: `jk` -> insert mode
-- toggle autosave: `<leader>s`
 
 * format file: `<leader>g`
-  j next tab: `gt`
+* j next tab: `gt`
 
 - comment current line: `<leader>c`
 - add comment at the end of the line: `<leader>a`
