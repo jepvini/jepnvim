@@ -174,7 +174,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   -- Themes
   { "ellisonleao/gruvbox.nvim", priority = 1000 },
-  { "folke/tokyonight.nvim", priority = 10000 },
+  { "folke/tokyonight.nvim", priority = 1000 },
   { "rebelot/kanagawa.nvim", priority = 1000 },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
@@ -190,7 +190,7 @@ require("lazy").setup({
   { "editorconfig/editorconfig-vim" },
   { "folke/trouble.nvim" }, -- debug
   { "kyazdani42/nvim-tree.lua" }, -- file manager
-  { "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
+  -- { "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
   { "mbbill/undotree" }, -- better undo
   { "norcalli/nvim-colorizer.lua" }, -- color over #999999
   { "numToStr/Comment.nvim" }, -- comment with leader cc
@@ -298,12 +298,12 @@ require("nvim-web-devicons").setup({})
 vim.opt.list = true
 vim.opt.listchars:append("eol:↴")
 
-require("ibl").setup({
-  debounce = 100,
-  indent = { char = "|" },
-  whitespace = { highlight = { "Whitespace", "NonText" } },
-  scope = { exclude = { language = { "lua" } } },
-})
+-- require("ibl").setup({
+--   debounce = 100,
+--   indent = { char = "|" },
+--   whitespace = { highlight = { "Whitespace", "NonText" } },
+--   scope = { exclude = { language = { "lua" } } },
+-- })
 
 -- Treesitter
 require("nvim-treesitter.configs").setup({
@@ -552,8 +552,7 @@ vim.keymap.set("n", "<leader>xx", function()
 end)
 
 -- Glow
-require("glow").setup({
-})
+require("glow").setup({})
 -- Plugins end
 
 ----------------------------------------------------
