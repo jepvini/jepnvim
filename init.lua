@@ -388,6 +388,9 @@ require("nvim-tree").setup({
       quit_on_open = true,
     },
   },
+  update_focused_file = {
+    enable = true,
+  },
   on_attach = my_on_attach,
 })
 --
