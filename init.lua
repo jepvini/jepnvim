@@ -130,9 +130,9 @@ vim.keymap.set("v", "<leader>S", ":sort<cr>")
 vim.keymap.set("n", "<leader>A", ":keepjumps normal! ggVG<cr>")
 
 -- Tabs
-vim.keymap.set("n", "<leader>h", "<cmd>tabn 3<cr>") -- tab 1
-vim.keymap.set("n", "<leader>j", "<cmd>tabn 1<cr>") -- tab 2
-vim.keymap.set("n", "<leader>k", "<cmd>tabn 2<cr>") -- tab 3
+vim.keymap.set("n", "<leader>h", "<cmd>tabn 3<cr>") -- tab 3
+vim.keymap.set("n", "<leader>j", "<cmd>tabn 1<cr>") -- tab 1
+vim.keymap.set("n", "<leader>k", "<cmd>tabn 2<cr>") -- tab 2
 vim.keymap.set("n", "<leader>l", "<cmd>tabn 4<cr>") -- tab 4
 
 -- Show registers
@@ -186,7 +186,6 @@ require("lazy").setup({
   { "RRethy/vim-illuminate" }, -- illuminate same word as cursor
   { "ThePrimeagen/vim-be-good" }, -- game
   { "akinsho/toggleterm.nvim" }, -- terminal
-  { "axkirillov/easypick.nvim" }, -- create telescope pickers
   { "editorconfig/editorconfig-vim" },
   { "folke/trouble.nvim" }, -- debug
   { "kyazdani42/nvim-tree.lua" }, -- file manager
@@ -468,26 +467,6 @@ vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
 vim.keymap.set("n", "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
 vim.keymap.set("n", "<leader>r", "<cmd>Telescope oldfiles<cr>")
-
--- Easypick
-local easypick = require("easypick")
-
-easypick.setup({
-  pickers = {
-    -- add your custom pickers here
-    -- below you can find some examples of what those can look like
-
-    -- list files inside current folder with default previewer
-    {
-      -- name for your custom picker, that can be invoked using :Easypick <name> (supports tab completion)
-      name = "find_files",
-      -- the command to execute, output has to be a list of plain text entries
-      command = "rg / --files  --glob '!{/bin,/boot,/dev,/lost+found,/nix,/proc,/root,/run,/srv,/sys,/tmp,/usr,/var,Git}' 2>/dev/null",
-      -- specify your custom previwer, or use one of the easypick.previewers
-      previewer = easypick.previewers.default(),
-    },
-  },
-})
 
 -- Toggleterminal
 require("toggleterm").setup({
