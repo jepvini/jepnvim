@@ -5,9 +5,6 @@
 --
 -- Dependencies:
 --
--- nix -> for lazy-lsp
--- $ curl -L https://nixos.org/nix/install | sh
---
 -- shellcheck -> for bashls
 -- # apt install shellcheck
 --
@@ -662,7 +659,7 @@ cmp.setup({
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete({}),
-    ["<CR>"] = cmp.mapping.confirm({
+    ["<S-CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
@@ -696,10 +693,8 @@ cmp.setup({
   },
 })
 
-local dict = require("cmp_dictionary")
-
-dict.switcher({
-  spelllang = {
-    en = "/home/leo/.config/nvim/dicts/en.dict",
-  },
+require("cmp_dictionary").setup({
+  paths = { "/home/leo/.config/nvim/dicts/en.dict" },
+  exact_length = 2,
+  first_case_insensitive = true,
 })
