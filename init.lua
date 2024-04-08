@@ -179,6 +179,7 @@ require("lazy").setup({
   { "tpope/vim-fugitive" }, -- git command from vim
 
   -- Various
+  { "HiPhish/rainbow-delimiters.nvim" },
   { "LnL7/vim-nix" }, -- better support for nix
   { "RRethy/vim-illuminate" }, -- illuminate same word as cursor
   { "ThePrimeagen/vim-be-good" }, -- game
@@ -532,6 +533,38 @@ end)
 
 -- Glow
 require("glow").setup({})
+
+-- RainbowDelimiter
+
+-- This module contains a number of default definitions
+local rainbow_delimiters = require 'rainbow-delimiters'
+
+
+-- @type rainbow_delimiters.config
+vim.g.rainbow_delimiters = {
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+        vim = rainbow_delimiters.strategy['local'],
+    },
+    query = {
+        [''] = 'rainbow-delimiters',
+        lua = 'rainbow-blocks',
+    },
+    priority = {
+        [''] = 110,
+        lua = 210,
+    },
+    highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+    },
+}
+
 -- Plugins end
 
 ----------------------------------------------------
