@@ -3,18 +3,6 @@
 --
 -- still wip as always
 --
--- Dependencies:
---
--- shellcheck -> for bashls
--- # apt install shellcheck
---
--- english dictionary
--- install aspell
--- # apt install aspell aspell-en
---
--- pipe it to a location
--- $ aspell -d en dump master | aspell -l en expand > my.dict
-
 --------------------------------------------------
 
 -- vim.opt settings
@@ -185,9 +173,10 @@ require("lazy").setup({
   { "ThePrimeagen/vim-be-good" }, -- game
   { "akinsho/toggleterm.nvim" }, -- terminal
   { "editorconfig/editorconfig-vim" },
+  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" }, -- md previwer
   { "folke/trouble.nvim" }, -- debug
   { "kyazdani42/nvim-tree.lua" }, -- file manager
-  -- { "lukas-reineke/indent-blankline.nvim" }, -- indent blankline
+  { "lervag/vimtex" }, -- latex
   { "mbbill/undotree" }, -- better undo
   { "norcalli/nvim-colorizer.lua" }, -- color over #999999
   { "numToStr/Comment.nvim" }, -- comment with leader cc
@@ -202,7 +191,15 @@ require("lazy").setup({
   { "tpope/vim-surround" }, -- adds the command surround
   { "wellle/targets.vim" }, -- surround
   { "zhimsel/vim-stay" }, -- cursor stays in place on file closing and reopening
-  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" }, -- md previwer
+
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
 
   {
     -- LSP Configuration & Plugins
@@ -537,32 +534,31 @@ require("glow").setup({})
 -- RainbowDelimiter
 
 -- This module contains a number of default definitions
-local rainbow_delimiters = require 'rainbow-delimiters'
-
+local rainbow_delimiters = require("rainbow-delimiters")
 
 -- @type rainbow_delimiters.config
 vim.g.rainbow_delimiters = {
-    strategy = {
-        [''] = rainbow_delimiters.strategy['global'],
-        vim = rainbow_delimiters.strategy['local'],
-    },
-    query = {
-        [''] = 'rainbow-delimiters',
-        lua = 'rainbow-blocks',
-    },
-    priority = {
-        [''] = 110,
-        lua = 210,
-    },
-    highlight = {
-        'RainbowDelimiterRed',
-        'RainbowDelimiterYellow',
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterOrange',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterViolet',
-        'RainbowDelimiterCyan',
-    },
+  strategy = {
+    [""] = rainbow_delimiters.strategy["global"],
+    vim = rainbow_delimiters.strategy["local"],
+  },
+  query = {
+    [""] = "rainbow-delimiters",
+    lua = "rainbow-blocks",
+  },
+  priority = {
+    [""] = 110,
+    lua = 210,
+  },
+  highlight = {
+    "RainbowDelimiterRed",
+    "RainbowDelimiterYellow",
+    "RainbowDelimiterBlue",
+    "RainbowDelimiterOrange",
+    "RainbowDelimiterGreen",
+    "RainbowDelimiterViolet",
+    "RainbowDelimiterCyan",
+  },
 }
 
 -- Plugins end
@@ -649,6 +645,12 @@ lspconfig.lua_ls.setup({
   },
 })
 lspconfig.marksman.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+lspconfig.matlab_ls.setup({
+  filetypes = { "matlab" },
+  single_file_support = true,
   capabilities = capabilities,
   on_attach = on_attach,
 })
