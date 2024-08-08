@@ -41,7 +41,7 @@ vim.opt.softtabstop = 2
 -- Indent size
 vim.opt.shiftwidth = 2
 
--- Tab are spaces
+-- Tabs are spaces
 vim.opt.expandtab = true
 
 -- Disable autocomment prssing on new line
@@ -64,11 +64,13 @@ vim.o.termguicolors = true
 vim.o.cursorline = true
 
 -- Fat cursor
-vim.opt.guicursor = ""
+vim.opt.guicursor = "n-v-i-r-c:block"
 
 -- Disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+vim.opt.pumheight = 5
 
 ----------------------------------------------------
 
@@ -190,6 +192,7 @@ require("lazy").setup({
   { "tpope/vim-repeat" }, -- better .
   { "tpope/vim-surround" }, -- adds the command surround
   { "wellle/targets.vim" }, -- surround
+  { "windwp/nvim-autopairs" },
   { "zhimsel/vim-stay" }, -- cursor stays in place on file closing and reopening
 
   {
@@ -214,6 +217,9 @@ require("lazy").setup({
     -- Autocompletion
     "hrsh7th/nvim-cmp",
     dependencies = {
+      -- Icon and text
+      "onsails/lspkind.nvim",
+
       -- Snippet Engine & its associated nvim-cmp source
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
@@ -229,6 +235,15 @@ require("lazy").setup({
 
       -- Adds dictionary support
       "uga-rosa/cmp-dictionary",
+
+      -- Buffer complete
+      "hrsh7th/cmp-buffer",
+
+      -- Buffer lines
+      "amarakon/nvim-cmp-buffer-lines",
+
+      -- Math calc
+      "hrsh7th/cmp-calc",
     },
   },
 })
@@ -498,6 +513,10 @@ require("conform").setup({
       command = "beautysh",
       prepend_args = { "--indent-size", "2" },
     },
+    clang_format = {
+      command = "clang-format",
+      prepend_args = { "--style", "file:/home/leo/.config/nvim/clang/clang-format" },
+    },
     stylua = {
       command = "stylua",
       prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
@@ -530,6 +549,9 @@ end)
 
 -- Glow
 require("glow").setup({})
+
+-- Nvim autopairs
+require("nvim-autopairs").setup({})
 
 -- RainbowDelimiter
 
@@ -678,9 +700,15 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require("cmp")
+local lspkind = require("lspkind")
 local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()
 luasnip.config.setup({})
+require("cmp_dictionary").setup({
+  paths = { "$HOME/.config/nvim/dicts/en.dict" },
+  exact_length = 2,
+  first_case_insensitive = true,
+})
 
 cmp.setup({
   snippet = {
@@ -717,19 +745,41 @@ cmp.setup({
       end
     end, { "i", "s" }),
   }),
+
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
+    { name = "buffer", keyword_length = 3 },
     { name = "async_path" },
+    -- { name = "buffer-lines" },
+    { name = "calc" },
     {
       name = "dictionary",
       keyword_length = 4,
     },
   },
-})
 
-require("cmp_dictionary").setup({
-  paths = { "/home/leo/.config/nvim/dicts/en.dict" },
-  exact_length = 2,
-  first_case_insensitive = true,
+  formatting = {
+    fields = { "abbr", "menu", "kind" },
+    expandable_indicator = false,
+    format = lspkind.cmp_format({
+      mode = "symbol_text",
+      menu = {
+        nvim_lsp = "[LSP]",
+        luasnip = "[LuaSnip]",
+        buffer = "[Buffer]",
+        async_path = "[Path]",
+        calc = "[Calc]",
+        dictionary = "[Dict]",
+      },
+    }),
+  },
+
+  window = {
+    completion = {
+      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      col_offset = -3,
+      side_padding = 0,
+    },
+  },
 })
