@@ -1,7 +1,6 @@
 BasedOnStyle: GNU
 BreakBeforeBraces: Linux
 SpaceBeforeParens: ControlStatements
-
 # Align
 AlignAfterOpenBracket: BlockIndent
 AlignArrayOfStructures: Right
@@ -9,10 +8,8 @@ AlignConsecutiveAssignments: Consecutive
 AlignConsecutiveMacros: Consecutive
 AlignOperands: Align
 AlignTrailingComments: true
-
 # On line
 AllowShortIfStatementsOnASingleLine: WithoutElse
-
 KeepEmptyLinesAtTheStartOfBlocks: false
 KeepEmptyLinesAtEOF: false
 MaxEmptyLinesToKeep: 3

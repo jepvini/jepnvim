@@ -1,127 +1,47 @@
-# NVIM config in lua
-
-*by jep*
+# JepNvim
+*A single file neovim config written in lua written by jep*
 
 ### Dependencies:
 
-Lsp servers and formatters are downloaded manually, it's easier using nixOs, if you want to auto install them look at the [lsp-zero](%22https://github.com/VonHeikemen/lsp-zero.nvim%22) github
+Lsp servers and formatters are downloaded manually using the Nix package manager
 
-##### Lsp servers
-* bashls
-* clangd
-* lua_ls
+
+### Base
+* nodejs
+* tree-sitter
+
+### Lsp
+* clang
+* clang-tools
+* lua-language-server
 * marksman
-* nil_ls
+* matlab-language-server
+* nil
+* nodePackages_latest.bash-language-server
 * pyright
-* rust_analyzer
-* yamlls
+* rust-analyzer
+* shellcheck
+* yaml-language-server
 
-##### formatters
-* clang_format
-* clang_format
-* jq
-* stylua
-* mdformat
+### Formatters
 * alejandra
-* isort
-* black
 * beautysh
+* black
 * codespell
-* trim_whitespace
-* trim_newlines
+* glow
+* isort
+* jq
+* nodePackages_latest.prettier
+* python311Packages.mdformat
+* stylua
+* taplo
+* tree-sitter
 
 ### Usage:
 
-The leader key is `space`
-
-In order to navigate pls don't be a n\*\*b and use `hjkl`, this is not VScode
-
-`Up` and `Down` keys have been disabled since they are sent by the terminal when the touchpad is accidentally touched while typing -- really annoying
-
-at the moment h and l are disabled because I want to learn to usr e, b and w instead
-
-### Keybindings
+### Useful vim std Keybindings
 
 Disclaimer: The key notation is the same used by vim
-
-- `a` -> press a
-- `<leader>` -> press the leader key
-- `<leader>a` -> press the leader key then a
-- `<C-a>` -> ctrl-a, at the same time
-
-all the Keybindings are in normal mode, unless specified
-
-### Base
-
-- exit file without closing the window: `<leader>q`
-- esc: `jk` -> insert mode
-
-* format file: `<leader>g`
-* j next tab: `gt`
-
-- comment current line: `<leader>c`
-- add comment at the end of the line: `<leader>a`
-- commedt visual selected block: `<leader>b`
-
-* sort alphanumerically visual selected code: `<leader>S`
-
-- yank to system keyboard: `cs`
-- paste from system keyboard: `cv`
-
-### Plugins
-
-**nvim-tree** -> file manager
-
-- toggle open-close: `<leader>e`
-- expand folder or go to file: `L` *the file is open in a new tab*
-- back: `H`
-- toggle hidden files: `gh`
-
-*telescope*\* -> fuzzy searcher
-
-- search in reccent files: `<leader>r`
-- search files in current dir: `<leader>ff`
-- grep current dir: `<leader>fg` *uses ripgrep, written in rust:)*
-- search in current file: `<leader>fs` \*use this instead as classic vim `/`
-
-* open file in a new tab: `<enter>`
-* open file in split: `<C-x>`
-* open file in vsplit: `<C-v>`
-
-**toggle terminal** -> terminal (really???)
-
-- toggle open-close: `<C-t>`
-
-**nvim-cmp** -> autocomplete
-
-- select highlighted: `<CR>` -> enter key
-- next: `<Tab>`
-- prev: `<S-Tab>`
-- close: `<C-e>`
-- show all words `<C-Space>` -> eng words appear only with more than 6 chars normally
-
-**vim-surround** -> manages quotes, brackets etc
-
-- add surround: `ys`
-- rm surround: `rs`
-- replace surround: `cs`
-
-of what:
-
-- inner word (bounded by non letters): `iw`
-- inner Word (bounded by spaces): `iW`
-- etc. -> more in vim documentation
-
-current line is selected with `_`, which+ current line
-
-what:
-
-- quotes: `'`
-- for replace: `'"` -> single with double
-
-to replace single quotes with double of a Word is: `csiW'"`
-
-### Useful vim std Keybindings
 
 **Nice to know**
 
@@ -129,7 +49,6 @@ to replace single quotes with double of a Word is: `csiW'"`
 - do action *n* times: `*n*<action>`
 - undo: `u`
 - redo: `<C-r>`
-- merge two lines: `<S-j>`
 
 delete 3 lines: `3dd` -> for more info about dd keep reading
 
@@ -277,3 +196,106 @@ numerical registers are used for yank and delete
 `+` is the system register
 yank line to system register: `"+yy`
 paste from system register: `"+p` -> although this works `Control-Shift-v` is more convenient
+
+The leader key is `space`
+
+In order to navigate pls don't be a n\*\*b and use `hjkl`, this is not VScode
+
+`Up` and `Down` keys have been disabled since they are sent by the terminal when the touchpad is accidentally touched while typing -- really annoying
+
+### My Config
+
+
+- `a` -> press a
+- `<leader>` -> press the leader key
+- `<leader>a` -> press the leader key then a
+- `<C-a>` -> ctrl-a, at the same time
+
+all the Keybindings are in normal mode, unless specified
+
+### Base
+
+- exit file without closing the window: `<leader>q`
+- esc: `jk` -> insert mode
+
+* format file: `<leader>g`
+* next tab: `gt`
+
+- comment current line: `<leader>c`
+- add comment at the end of the line: `<leader>a`
+- comment visual selected block: `<leader>b`
+
+* sort alphanumerically visual selected code: `<leader>S`
+
+- yank to system keyboard: `cs`
+- paste from system keyboard: `cv`
+
+* move up half screen: `K`
+* move down half screen: `J`
+
+### Plugins
+
+**nvim-tree** -> file manager
+
+- toggle open-close: `<leader>e`
+- expand folder or go to file: `L` *the file is open in a new tab*
+- back: `H`
+- toggle hidden files: `gh`
+
+*telescope** -> fuzzy searcher
+
+- search in reccent files: `<leader>r`
+- search in the whole file system `<leader>ff`
+- grep in current dir: `<leader>fg` *uses ripgrep, written in rust:)*
+- search in current file: `<leader>fs`
+
+* open file in a new tab: `<enter>`
+* open file in split: `<C-x>`
+* open file in vsplit: `<C-v>`
+
+**toggle terminal** -> terminal (really???)
+
+- toggle open-close: `<C-t>`
+
+**nvim-cmp** -> autocomplete
+
+- select highlighted: `<CR>` -> enter key
+- next: `<Tab>`
+- prev: `<S-Tab>`
+- close: `<C-e>`
+
+**vim-surround** -> manages quotes, brackets etc
+
+- add surround: `ys`
+- rm surround: `rs`
+- replace surround: `cs`
+
+of what:
+
+- inner word (bounded by non letters): `iw`
+- inner Word (bounded by spaces): `iW`
+- etc. -> more in vim documentation
+
+current line is selected with `_`, which+ current line
+
+what:
+
+- quotes: `'`
+- for replace: `'"` -> single with double
+
+to replace single quotes with double of a Word is: `csiW'"`
+
+**lsp**
+
+
+- re[n]ame variable: `<leader>nn`
+- c[O]de [A]ction: `<leader>oa`, vim.lsp.buf.code_action, "c[O]de [A]ction")
+
+-  [G]oto [D]definition: `gd`
+-  [G]oto [R]references: `gr`
+-  [G]oto [I]mplementation: `gI`
+-  Type [D]definition: `<leader>D`
+-  [D]ocument [S]symbols: `<leader>ds`
+-  [W]orkspace [S]symbols: `<leader>Ws`
+ - Hover Documentation: `<leader>i`
+ - Signature Documentation: `<C-k>`

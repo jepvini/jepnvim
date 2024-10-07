@@ -160,13 +160,21 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- Themes
+  { "Mofiqul/dracula.nvim", priority = 1000 },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   { "ellisonleao/gruvbox.nvim", priority = 1000 },
   { "folke/tokyonight.nvim", priority = 1000 },
   { "rebelot/kanagawa.nvim", priority = 1000 },
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    "rktjmp/lush.nvim",
+    -- if you wish to use your own colorscheme:
+    -- { dir = '/absolute/path/to/colorscheme', lazy = true },
+  },
 
   -- No config
   { "tpope/vim-fugitive" }, -- git command from vim
+
+  -- MarkdownPreview
 
   -- Various
   { "HiPhish/rainbow-delimiters.nvim" },
@@ -264,7 +272,7 @@ require("lazy").setup({
 
 -- Tokyonight
 -- vim.opt.termguicolors = true
--- vim.cmd.colorscheme('tokyonight')
+-- vim.cmd.colorscheme("tokyonight")
 
 -- Gruvbox
 -- vim.o.background = "dark" -- or "light" for light mode
@@ -273,24 +281,79 @@ require("lazy").setup({
 -- Kanagawa
 require("kanagawa").setup({
   background = { -- map the value of 'background' option to a theme
-    dark = "wave", -- try "dragon" !
+    dark = "dragon", -- try "dragon" !
     light = "lotus",
   },
 })
+
+-- Dracula
+-- Lua:
+-- vim.cmd.colorscheme("dracula")
+
+-- custom theme
 
 vim.cmd.colorscheme("kanagawa")
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
-vim.api.nvim_set_hl(0, "LineNr", { fg = "#C8C093" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#e6c384" })
 
 -- Lualine
+
+local lua_line_theme = require("lualine.themes.gruvbox")
+
+-- Change the background of lualine_c section for normal mode
+local colors = {
+  black = "#16161d",
+  white = "#dcd7ba",
+  red = "#e82424",
+  green = "#98bb6c",
+  blue = "#7e9cd8",
+  yellow = "#e6c384",
+  purple = "#af5fd7",
+  orange = "#ffa066",
+  gray = "#727169",
+}
+
+lua_line_theme = {
+  normal = {
+    a = { bg = colors.purple, fg = colors.black, gui = "bold" },
+    b = { bg = colors.black, fg = colors.purple },
+    c = { bg = colors.black, fg = colors.purple },
+  },
+  insert = {
+    a = { bg = colors.blue, fg = colors.black, gui = "bold" },
+    b = { bg = colors.black, fg = colors.blue },
+    c = { bg = colors.black, fg = colors.blue },
+  },
+  visual = {
+    a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+    b = { bg = colors.black, fg = colors.yellow },
+    c = { bg = colors.black, fg = colors.yellow },
+  },
+  replace = {
+    a = { bg = colors.orange, fg = colors.black, gui = "bold" },
+    b = { bg = colors.black, fg = colors.orange },
+    c = { bg = colors.black, fg = colors.orange },
+  },
+  command = {
+    a = { bg = colors.green, fg = colors.black, gui = "bold" },
+    b = { bg = colors.black, fg = colors.green },
+    c = { bg = colors.black, fg = colors.green },
+  },
+  inactive = {
+    a = { bg = colors.gray, fg = colors.purple, gui = "bold" },
+    b = { bg = colors.black, fg = colors.purple },
+    c = { bg = colors.black, fg = colors.purple },
+  },
+}
+
 vim.opt.showmode = false
 
 require("lualine").setup({
   options = {
-    theme = "auto",
+    theme = lua_line_theme,
     icons_enabled = true,
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
@@ -307,13 +370,6 @@ require("nvim-web-devicons").setup({})
 vim.opt.list = true
 vim.opt.listchars:append("eol:↴")
 
--- require("ibl").setup({
---   debounce = 100,
---   indent = { char = "|" },
---   whitespace = { highlight = { "Whitespace", "NonText" } },
---   scope = { exclude = { language = { "lua" } } },
--- })
-
 -- Treesitter
 require("nvim-treesitter.configs").setup({
   highlight = {
@@ -322,6 +378,9 @@ require("nvim-treesitter.configs").setup({
   indent = {
     enable = true,
   },
+  sync_install = false,
+  auto_install = true,
+  ignore_install = {},
   ensure_installed = {
     "bash",
     "c",
@@ -334,8 +393,10 @@ require("nvim-treesitter.configs").setup({
     "nix",
     "python",
     "rust",
+    "toml",
     "yaml",
   },
+
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -486,10 +547,7 @@ require("toggleterm").setup({
 })
 
 -- Colorizer
-require("colorizer").setup({
-  css = { names = false },
-  html = { names = false },
-})
+require("colorizer").setup()
 
 -- Illuminate
 require("illuminate").configure({})
@@ -515,7 +573,7 @@ require("conform").setup({
     },
     clang_format = {
       command = "clang-format",
-      prepend_args = { "--style", "file:/home/nixos/.config/nvim/clang/clang-format" },
+      prepend_args = { "--style", "file:/home/leo/.config/nvim/clang/clang-format" },
     },
     stylua = {
       command = "stylua",
@@ -532,6 +590,7 @@ require("conform").setup({
     nix = { "alejandra" },
     python = { "isort", "black" },
     sh = { "beautysh" },
+    toml = { "taplo" },
 
     ["*"] = { "codespell", "trim_whitespace", "trim_newlines" },
   },
@@ -587,7 +646,7 @@ vim.g.rainbow_delimiters = {
 
 ----------------------------------------------------
 
--- LSP servers with lsp_zero
+-- LSP servers
 
 ----------------------------------------------------
 
@@ -611,10 +670,10 @@ local on_attach = function(_, bufnr)
   nmap("<leader>nn", vim.lsp.buf.rename, "re[n]ame")
   nmap("<leader>oa", vim.lsp.buf.code_action, "c[O]de [A]ction")
 
-  nmap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+  nmap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]definition")
   nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]references")
   nmap("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-  nmap("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+  nmap("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]definition")
   nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]symbols")
   nmap("<leader>Ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]symbols")
 
@@ -705,7 +764,7 @@ local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()
 luasnip.config.setup({})
 require("cmp_dictionary").setup({
-  paths = { "$HOME/.config/nvim/dicts/en.dict" },
+  paths = { "/home/leo/.config/nvim/dicts/en.dict" },
   exact_length = 2,
   first_case_insensitive = true,
 })
@@ -717,15 +776,11 @@ cmp.setup({
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete({}),
-    ["<S-CR>"] = cmp.mapping.confirm({
+    ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
+    ["<C-e>"] = cmp.mapping.abort(),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
