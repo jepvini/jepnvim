@@ -41,16 +41,19 @@ Lsp servers and formatters are downloaded manually using the Nix package manager
 
 ### Useful vim std Keybindings
 
+- `a` -> press a
+- `<leader>` -> press the leader key
+- `<leader>a` -> press the leader key then a
+- `<C-a>` -> ctrl-a, at the same time
+
+In order to navigate pls don't be a n\*\*b and use `hjkl`, this is not VScode
+
+`Up` and `Down` keys have been disabled since they are sent by the terminal when the touchpad is accidentally touched while typing -- really annoying
+
+
 Disclaimer: The key notation is the same used by vim
 
 **Nice to know**
-
-- repeat last action: `.`
-- do action *n* times: `*n*<action>`
-- undo: `u`
-- redo: `<C-r>`
-
-delete 3 lines: `3dd` -> for more info about dd keep reading
 
 **Commands** -> what you want to do
 
@@ -134,6 +137,15 @@ all the inline movement are the same used for the **select section**
 - goto end of line `$`
   etc.
 
+**Cool mechanics**
+
+- repeat last action: `.`
+- do action *n* times: `*n*<action>`
+- undo: `u`
+- redo: `<c-r>`
+
+delete 3 lines: `3dd` -> for more info about dd keep reading
+
 insert
 
 - before cursor: `i`
@@ -199,17 +211,8 @@ paste from system register: `"+p` -> although this works `Control-Shift-v` is mo
 
 The leader key is `space`
 
-In order to navigate pls don't be a n\*\*b and use `hjkl`, this is not VScode
-
-`Up` and `Down` keys have been disabled since they are sent by the terminal when the touchpad is accidentally touched while typing -- really annoying
-
 ### My Config
 
-
-- `a` -> press a
-- `<leader>` -> press the leader key
-- `<leader>a` -> press the leader key then a
-- `<C-a>` -> ctrl-a, at the same time
 
 all the Keybindings are in normal mode, unless specified
 
@@ -225,10 +228,10 @@ all the Keybindings are in normal mode, unless specified
 - add comment at the end of the line: `<leader>a`
 - comment visual selected block: `<leader>b`
 
-* sort alphanumerically visual selected code: `<leader>S`
+* sort alphanumerically visual selected lines: `<leader>S`
 
-- yank to system keyboard: `cs`
-- paste from system keyboard: `cv`
+- yank to system keyboard in visual mode: `cs`
+- paste from system keyboard in visual mode: `cv`
 
 * move up half screen: `K`
 * move down half screen: `J`
@@ -286,7 +289,6 @@ what:
 to replace single quotes with double of a Word is: `csiW'"`
 
 **lsp**
-
 
 - re[n]ame variable: `<leader>nn`
 - c[O]de [A]ction: `<leader>oa`, vim.lsp.buf.code_action, "c[O]de [A]ction")
