@@ -160,10 +160,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- Themes
-  { "Mofiqul/dracula.nvim", priority = 1000 },
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  { "ellisonleao/gruvbox.nvim", priority = 1000 },
-  { "folke/tokyonight.nvim", priority = 1000 },
   { "rebelot/kanagawa.nvim", priority = 1000 },
   {
     "rktjmp/lush.nvim",
@@ -171,8 +167,8 @@ require("lazy").setup({
     -- { dir = '/absolute/path/to/colorscheme', lazy = true },
   },
 
-  -- No config
-  { "tpope/vim-fugitive" }, -- git command from vim
+  -- Faster
+  { "pteroctopus/faster.nvim" },
 
   -- MarkdownPreview
 
@@ -180,10 +176,8 @@ require("lazy").setup({
   { "HiPhish/rainbow-delimiters.nvim" },
   { "LnL7/vim-nix" }, -- better support for nix
   { "RRethy/vim-illuminate" }, -- illuminate same word as cursor
-  { "ThePrimeagen/vim-be-good" }, -- game
   { "akinsho/toggleterm.nvim" }, -- terminal
   { "editorconfig/editorconfig-vim" },
-  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" }, -- md previwer
   { "folke/trouble.nvim" }, -- debug
   { "kyazdani42/nvim-tree.lua" }, -- file manager
   { "lervag/vimtex" }, -- latex
@@ -191,20 +185,20 @@ require("lazy").setup({
   { "norcalli/nvim-colorizer.lua" }, -- color over #999999
   { "numToStr/Comment.nvim" }, -- comment with leader cc
   { "nvim-lualine/lualine.nvim" }, -- status line theme
-  { "nvim-telescope/telescope.nvim", tag = "0.1.2", dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
+  { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
   { "nvim-tree/nvim-web-devicons" }, -- icons
   { "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
   { "pocco81/auto-save.nvim" }, -- auto save
   { "stevearc/conform.nvim" }, -- formatter
-  { "stevearc/oil.nvim" }, -- file manager
   { "tpope/vim-repeat" }, -- better .
   { "tpope/vim-surround" }, -- adds the command surround
   { "wellle/targets.vim" }, -- surround
-  { "windwp/nvim-autopairs" },
+  { "windwp/nvim-autopairs" }, -- auto close brackets
   { "zhimsel/vim-stay" }, -- cursor stays in place on file closing and reopening
 
   {
     "iamcco/markdown-preview.nvim",
+    lazy = true,
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = "cd app && yarn install",
     init = function()
@@ -258,26 +252,6 @@ require("lazy").setup({
 
 -- Plugin config
 
--- require("catppuccin").setup({
--- 	flavour = "macchiato", -- latte, frappe, macchiato, mocha
--- 	background = { -- :h background
--- 		light = "latte",
--- 		dark = "mocha",
--- 	},
--- 	transparent_background = true,
--- })
---
--- -- setup must be called before loading
--- vim.cmd.colorscheme("catppuccin")
-
--- Tokyonight
--- vim.opt.termguicolors = true
--- vim.cmd.colorscheme("tokyonight")
-
--- Gruvbox
--- vim.o.background = "dark" -- or "light" for light mode
--- vim.cmd([[colorscheme gruvbox]])
-
 -- Kanagawa
 require("kanagawa").setup({
   background = { -- map the value of 'background' option to a theme
@@ -285,10 +259,6 @@ require("kanagawa").setup({
     light = "lotus",
   },
 })
-
--- Dracula
--- Lua:
--- vim.cmd.colorscheme("dracula")
 
 -- custom theme
 
@@ -606,9 +576,6 @@ vim.keymap.set("n", "<leader>xx", function()
   require("trouble").toggle()
 end)
 
--- Glow
-require("glow").setup({})
-
 -- Nvim autopairs
 require("nvim-autopairs").setup({})
 
@@ -641,6 +608,9 @@ vim.g.rainbow_delimiters = {
     "RainbowDelimiterCyan",
   },
 }
+
+-- Faster
+require("faster").setup()
 
 -- Plugins end
 
