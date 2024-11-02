@@ -1,10 +1,9 @@
 # JepNvim
 *A single file neovim config written in lua written by jep*
 
-### Dependencies:
+##### Dependencies
 
 Lsp servers and formatters are downloaded manually using the Nix package manager
-
 
 ### Base
 * nodejs
