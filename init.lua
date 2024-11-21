@@ -255,7 +255,7 @@ require("lazy").setup({
 -- Kanagawa
 require("kanagawa").setup({
   background = { -- map the value of 'background' option to a theme
-    dark = "dragon", -- try "dragon" !
+    dark = "wave", -- try "dragon" !
     light = "lotus",
   },
 })
@@ -271,7 +271,7 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#e6c384" })
 
 -- Lualine
 
-local lua_line_theme = require("lualine.themes.gruvbox")
+-- local lua_line_theme = require("lualine.themes.gruvbox")
 
 -- Change the background of lualine_c section for normal mode
 local colors = {
@@ -452,34 +452,8 @@ require("telescope").setup({
     find_files = {
       find_command = {
         "rg",
-        "/",
+        "/home/leo",
         "--files",
-        "--glob",
-        "!.*",
-        "--glob",
-        "!boot/",
-        "--glob",
-        "!dev/",
-        "--glob",
-        "!nix/",
-        "--glob",
-        "!proc/",
-        "--glob",
-        "!root/",
-        "--glob",
-        "!run/",
-        "--glob",
-        "!srv/",
-        "--glob",
-        "!sys/",
-        "--glob",
-        "!tmp/",
-        "--glob",
-        "!usr/",
-        "--glob",
-        "!var/",
-        "--glob",
-        "!Git",
       },
       mappings = {
         i = {
@@ -735,7 +709,7 @@ require("luasnip.loaders.from_vscode").lazy_load()
 luasnip.config.setup({})
 require("cmp_dictionary").setup({
   paths = { "/home/leo/.config/nvim/dicts/en.dict" },
-  exact_length = 2,
+  exact_length = 4,
   first_case_insensitive = true,
 })
 
@@ -780,7 +754,7 @@ cmp.setup({
     { name = "calc" },
     {
       name = "dictionary",
-      keyword_length = 3,
+      keyword_length = 4,
     },
   },
 
