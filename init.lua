@@ -178,7 +178,6 @@ require("lazy").setup({
   { "RRethy/vim-illuminate" }, -- illuminate same word as cursor
   { "akinsho/toggleterm.nvim" }, -- terminal
   { "editorconfig/editorconfig-vim" },
-  { "folke/trouble.nvim" }, -- debug
   { "kyazdani42/nvim-tree.lua" }, -- file manager
   { "lervag/vimtex" }, -- latex
   { "mbbill/undotree" }, -- better undo
@@ -246,6 +245,44 @@ require("lazy").setup({
 
       -- Math calc
       "hrsh7th/cmp-calc",
+    },
+  },
+
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>xl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
     },
   },
 })
@@ -545,11 +582,6 @@ vim.keymap.set("n", "<leader>g", vim.cmd.Conform)
 -- Undotree
 vim.keymap.set("n", "<leader>p", vim.cmd.UndotreeToggle)
 
--- Trouble
-vim.keymap.set("n", "<leader>xx", function()
-  require("trouble").toggle()
-end)
-
 -- Nvim autopairs
 require("nvim-autopairs").setup({})
 
@@ -719,21 +751,30 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
-  mapping = cmp.mapping.preset.insert({
-    ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    }),
-    ["<C-e>"] = cmp.mapping.abort(),
+  mapping = {
+    ["<CR>"] = cmp.mapping(function(fallback)
+      if cmp.visible() and cmp.get_active_entry() then
+        if luasnip.expandable() then
+          luasnip.expand()
+        else
+          cmp.confirm({
+            select = true,
+          })
+        end
+      else
+        fallback()
+      end
+    end),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
+      elseif luasnip.locally_jumpable(1) then
+        luasnip.jump(1)
       else
         fallback()
       end
     end, { "i", "s" }),
+
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -743,7 +784,9 @@ cmp.setup({
         fallback()
       end
     end, { "i", "s" }),
-  }),
+
+    ["<C-e>"] = cmp.mapping.abort(),
+  },
 
   sources = {
     { name = "nvim_lsp" },
