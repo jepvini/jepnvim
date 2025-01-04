@@ -513,6 +513,8 @@ require("telescope").setup({
         "!.mozilla",
         "-g",
         "!.config",
+        "-g",
+        "!.undodir",
         "--hidden",
       },
       mappings = {
@@ -551,7 +553,19 @@ require("toggleterm").setup({
 })
 
 -- Colorizer
-require("colorizer").setup()
+require("colorizer").setup({
+  lua = {
+    names = false;
+  };
+  css = {
+    names = false;
+    RRGGBBAA = true;
+  };
+  scss = {
+    names = false;
+    RRGGBBAA = true;
+  }
+})
 
 -- Illuminate
 require("illuminate").configure({})
