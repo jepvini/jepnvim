@@ -184,7 +184,14 @@ require("lazy").setup({
   { "norcalli/nvim-colorizer.lua" }, -- color over #999999
   { "numToStr/Comment.nvim" }, -- comment with leader cc
   { "nvim-lualine/lualine.nvim" }, -- status line theme
-  { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } }, -- used by other plugins
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+    },
+  }, -- used by other plugins
   { "nvim-tree/nvim-web-devicons" }, -- icons
   { "nvim-treesitter/nvim-treesitter" }, -- fuzzy search
   { "pocco81/auto-save.nvim" }, -- auto save
@@ -287,47 +294,63 @@ require("lazy").setup({
   },
 })
 
+-- Palette
+
 -- Plugin config
 
 -- Kanagawa
 require("kanagawa").setup({
   background = { -- map the value of 'background' option to a theme
     dark = "wave", -- try "dragon" !
-    light = "lotus",
+  },
+  colors = {
+    theme = {
+      all = {
+        ui = {
+          bg = "none",
+        },
+      },
+    },
   },
 })
 
 -- custom theme
 
-vim.cmd.colorscheme("kanagawa")
+local colors = {
+  black = "#000000",
+  red = "#d34043",
+  green = "#a6e3a1",
+  yellow = "#f9e2af",
+  blue = "#89b4fa",
+  magenta = "#cba6f7",
+  cyan = "#74c7ec",
+  white = "#bac2de",
+  black_b = "#6c7086",
+  red_b = "#e82424",
+  green_b = "#98cb6c",
+  yellow_b = "#e6c984",
+  blue_b = "#89dceb",
+  magenta_b = "#af5fd7",
+  cyan_b = "#94e2d5",
+  white_b = "#e4e4e4",
+}
 
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.cmd.colorscheme("kanagawa")
+--
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
-vim.api.nvim_set_hl(0, "LineNr", { fg = "#e6c384" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = colors.yellow })
 
 -- Lualine
 
--- local lua_line_theme = require("lualine.themes.gruvbox")
-
 -- Change the background of lualine_c section for normal mode
-local colors = {
-  black = "#16161d",
-  white = "#dcd7ba",
-  red = "#e82424",
-  green = "#98bb6c",
-  blue = "#7e9cd8",
-  yellow = "#e6c384",
-  purple = "#af5fd7",
-  orange = "#ffa066",
-  gray = "#727169",
-}
 
 lua_line_theme = {
   normal = {
-    a = { bg = colors.purple, fg = colors.black, gui = "bold" },
-    b = { bg = colors.black, fg = colors.purple },
-    c = { bg = colors.black, fg = colors.purple },
+    a = { bg = colors.magenta, fg = colors.black, gui = "bold" },
+    b = { bg = colors.black, fg = colors.magenta },
+    c = { bg = colors.black, fg = colors.magenta },
   },
   insert = {
     a = { bg = colors.blue, fg = colors.black, gui = "bold" },
@@ -340,9 +363,9 @@ lua_line_theme = {
     c = { bg = colors.black, fg = colors.yellow },
   },
   replace = {
-    a = { bg = colors.orange, fg = colors.black, gui = "bold" },
-    b = { bg = colors.black, fg = colors.orange },
-    c = { bg = colors.black, fg = colors.orange },
+    a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+    b = { bg = colors.black, fg = colors.yellow },
+    c = { bg = colors.black, fg = colors.yellow },
   },
   command = {
     a = { bg = colors.green, fg = colors.black, gui = "bold" },
@@ -350,9 +373,9 @@ lua_line_theme = {
     c = { bg = colors.black, fg = colors.green },
   },
   inactive = {
-    a = { bg = colors.gray, fg = colors.purple, gui = "bold" },
-    b = { bg = colors.black, fg = colors.purple },
-    c = { bg = colors.black, fg = colors.purple },
+    a = { bg = colors.gray, fg = colors.magent, gui = "bold" },
+    b = { bg = colors.black, fg = colors.magenta },
+    c = { bg = colors.black, fg = colors.magenta },
   },
 }
 
@@ -545,6 +568,12 @@ vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
 vim.keymap.set("n", "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
 vim.keymap.set("n", "<leader>r", "<cmd>Telescope oldfiles<cr>")
 
+-- telescope fzf native
+
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require("telescope").load_extension("fzf")
+
 -- Toggleterminal
 require("toggleterm").setup({
   open_mapping = "<C-t>",
@@ -555,16 +584,16 @@ require("toggleterm").setup({
 -- Colorizer
 require("colorizer").setup({
   lua = {
-    names = false;
-  };
+    names = false,
+  },
   css = {
-    names = false;
-    RRGGBBAA = true;
-  };
+    names = false,
+    RRGGBBAA = true,
+  },
   scss = {
-    names = false;
-    RRGGBBAA = true;
-  }
+    names = false,
+    RRGGBBAA = true,
+  },
 })
 
 -- Illuminate
